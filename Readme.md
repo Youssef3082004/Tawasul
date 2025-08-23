@@ -9,12 +9,12 @@
 
 - There are not enough professional sign language interpreters, and services are often expensive or unavailable on demand.  
 
-- > Globally, there is a trend toward automated solutions for example, the UK is testing sign language avatars in public transport.
+> Globally, there is a trend toward automated solutions for example, the UK is testing sign language avatars in public transport.
 
 ---
 
 - Low public awareness of sign language creates barriers in education, healthcare, and access to services.
-- > (Hearing loss also becomes more common with age, making the issue even more pressing).
+> (Hearing loss also becomes more common with age, making the issue even more pressing).
 
 
 ### 🌟 So Stay Tuned For what's coming
