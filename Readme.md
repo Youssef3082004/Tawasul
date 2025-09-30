@@ -1,6 +1,6 @@
-# Sentiment & Emotion Analysis App
+# Sentiment & Emotion Analysis App: **Tawasul**
 
-## 📌 Problem
+### 📌 Problem
 
 As a **noter**, I often write notes about my day in a notes application — whether good or bad situations. However:
 
@@ -8,7 +8,7 @@ As a **noter**, I often write notes about my day in a notes application — whet
 * When chatting with someone on **WhatsApp or Facebook**, it’s not always clear what the other person’s emotion is. Misinterpretations can lead to **confusion or conflicts**.
 * The same applies to **images** — it’s not easy to tell what someone is feeling in a captured moment.
 
-## 💡 Solution
+### 💡 Solution
 
 A **mobile application powered by NLP and Deep Learning** that can:
 
