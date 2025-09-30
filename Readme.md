@@ -1,20 +1,38 @@
+# Sentiment & Emotion Analysis App
 
-# Tawasul - تواصل :
+## 📌 Problem
 
-- **Tawasul** is a Mobile Application powered by AI that translates Arabic and English sign language into text ,and vice versa in real time. It can also convert speech or text into sign language videos or simplified gesture commands. The main goal is to reduce the communication gap between the deaf and hard-of-hearing community and the rest of society, especially in daily situations like hospitals, government offices, universities, banks, and stores.
+As a **noter**, I often write notes about my day in a notes application — whether good or bad situations. However:
 
-- Globally, over **1.5 billion people** live with some degree of hearing loss, and around **430 million** experience disabling hearing loss. This shows how big and important the problem is.
+* It’s difficult to **determine my emotions** from what I write, which makes it harder to track my psychological state over time.
+* When chatting with someone on **WhatsApp or Facebook**, it’s not always clear what the other person’s emotion is. Misinterpretations can lead to **confusion or conflicts**.
+* The same applies to **images** — it’s not easy to tell what someone is feeling in a captured moment.
 
-## The problem and impact:
+## 💡 Solution
 
-- There are not enough professional sign language interpreters, and services are often expensive or unavailable on demand.  
+A **mobile application powered by NLP and Deep Learning** that can:
 
-> Globally, there is a trend toward automated solutions for example, the UK is testing sign language avatars in public transport.
+* Detect emotions from the **text** the user writes.
+* Analyze **facial expressions** through the camera or uploaded images.
+* Track and analyze emotions over time to help users better understand themselves.
+* Provide **suggestions and insights** for improving emotional well-being.
 
----
+This will allow users to avoid misunderstandings in chats, gain personal awareness, and even reflect on long-term emotional patterns.
 
-- Low public awareness of sign language creates barriers in education, healthcare, and access to services.
-> (Hearing loss also becomes more common with age, making the issue even more pressing).
+## 🔑 Features
+
+* Detect emotion from personal notes.
+* Upload an image to analyze the **emotion of a person** in it.
+* Track and analyze historical emotional patterns.
+
+## 🛠️ Technologies
+
+* **Frontend:** Dart (Flutter)
+* **Backend & ML:** Python (TensorFlow, NLTK, scikit-learn, Pandas, NumPy)
 
 
-### 🌟 So Stay Tuned For what's coming
+
+
+
+
+### ✨ **So Stay Tuned for What's Coming!**
