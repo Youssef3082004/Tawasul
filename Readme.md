@@ -2,11 +2,11 @@
 
 ### 📌 Problem
 
-As a **noter**, I often write notes about my day in a notes application — whether good or bad situations. However:
+As a **noter**, I often write notes about my day in a notes application, whether good or bad situations. However:
 
 * It’s difficult to **determine my emotions** from what I write, which makes it harder to track my psychological state over time.
 * When chatting with someone on **WhatsApp or Facebook**, it’s not always clear what the other person’s emotion is. Misinterpretations can lead to **confusion or conflicts**.
-* The same applies to **images** — it’s not easy to tell what someone is feeling in a captured moment.
+* The same applies to **images**, it’s not easy to tell what someone is feeling in a captured moment.
 
 ### 💡 Solution
 
