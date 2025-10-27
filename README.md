@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets//images//icon.png" alt="KemetPass Logo" width="300" height="300">
+<img src="assets//images//removebg.png" alt="KemetPass Logo" width="300" height="300">
 
 
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=inter&pause=1000&color=137FEC&center=true&width=600&lines=Tawasul+-++Emotional+Monitor+App;A+smart+way+to+explore+user%E2%80%99s+Emotions+by+AI)](https://git.io/typing-svg)
