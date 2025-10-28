@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tawasul/screens/Thoughts.dart';
 import 'package:tawasul/screens/onboard/welcome.dart';
 import 'package:tawasul/screens/onboard/onboarding.dart';
+import 'package:tawasul/provider/theme.dart';
 
 void main() {
   // runApp(MultiProvider(providers: [ChangeNotifierProvider(create: (context) => Mode()),ChangeNotifierProvider(create: (context) => Language())],child: MyApp()));
@@ -16,14 +18,15 @@ class MyApp extends StatelessWidget {
     Map<String, Widget Function(BuildContext)> routes = {
       "/":(context) => Welcome(),
       "/onboarding": (context) => Onboarding(),
-
-
+      "/thoughts":(context) => Thoughts()
     };
 
     
     return MaterialApp(debugShowCheckedModeBanner: false,
     initialRoute: "/",
       title: "Tawasul",routes:routes,
+      theme: lightmode,
+      
     );
   }
 }
