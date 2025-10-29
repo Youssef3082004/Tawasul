@@ -19,6 +19,9 @@ class Constants {
   Color get Container_borderColor => Color(0xff7d7b7d);
   Color get Container_fillColor => Color(0xff27272a);
 
+  BoxDecoration get Container_decor =>  BoxDecoration(border: Border.all(color: Color(0xff7d7b7d),width: 3),color: Color(0xff27272a),borderRadius: BorderRadius.circular(12));
+   
+
 
 
   ButtonStyle get Button_style =>  ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color(0xff137FEC)),shape: WidgetStatePropertyAll(
@@ -29,5 +32,21 @@ class Constants {
 
 
 
+
+}
+
+
+
+class Identity extends StatelessWidget{
+
+  const Identity({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    Image Logo_image = Image.asset("assets/images/logo.png",fit: BoxFit.cover,);
+    SizedBox image_container = SizedBox(child: Logo_image,width: 200,);
+    Text Appliation_name = Text("Tawasul",style: TextStyle(fontSize: 30,color: Colors.white,fontFamily: "Pac"));
+    return Column(children: [image_container,Appliation_name],spacing: 0,);
+  }
 
 }

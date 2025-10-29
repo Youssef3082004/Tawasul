@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:tawasul/constants.dart';
 import 'package:tawasul/widget/enddrawer.dart';
-import 'package:tawasul/widget/Home_widget.dart';
+import 'package:tawasul/widget/thoughts_widget.dart';
 // import 'package:tawasul/widget/constant_widget.dart';
 
 class Thoughts extends StatefulWidget{
@@ -34,16 +34,7 @@ class _Home extends State<Thoughts>{
     Row ggg = Row(children: [Texts],mainAxisAlignment: MainAxisAlignment.start,);
 
     //! ==================================================================== Note Widget =============================================
-    TextFormField title_text = TextFormField(controller: titleController,cursorColor: const Color(0xff7d7b7d),style: const TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold),
-    decoration: InputDecoration(hintText: "Title",hintStyle: TextStyle(color: Colors.white54),enabledBorder:UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),focusedBorder:UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)) ),);
-    
-    TextFormField content_text =  TextFormField(controller: contentController,cursorColor: Color(0xff7d7b7d),keyboardType: TextInputType.multiline,maxLines: 10,style: TextStyle(color: Colors.white),
-    decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder:InputBorder.none ,hintText: "Tell me what in your mind ..."));
-
-    Column Note_Container_Controls = Column(children: [title_text,content_text],spacing: 0);
-    
-    BoxDecoration widget_decor = BoxDecoration(border: Border.all(color: cons.Container_borderColor,width: 3),color: cons.Container_fillColor,borderRadius: BorderRadius.circular(12));
-    Container Note_container = Container(child: Note_Container_Controls,decoration: widget_decor,padding: const EdgeInsets.all(5),);
+    ThoughtsTextfeild Note_container = ThoughtsTextfeild();
 
     //! ==================================================================== Analyze Button =============================================
     FilledButton analyze_button = FilledButton(onPressed: ()=> Navigator.pushNamedAndRemoveUntil(context, "/onboarding", (route) => false), child: Text("Analyze",style: TextStyle(fontWeight: FontWeight.w700),),style: cons.Button_style);

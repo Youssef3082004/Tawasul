@@ -1,5 +1,62 @@
-import "package:flutter/material.dart";
+import 'package:flutter/material.dart';
 import 'package:tawasul/constants.dart';
+
+
+
+
+class ThoughtsTextfeild extends StatefulWidget{
+
+  const ThoughtsTextfeild({super.key});
+
+  @override
+  State<ThoughtsTextfeild> createState() => _ThoughtsTextfeild();
+
+}
+
+
+class _ThoughtsTextfeild extends State<ThoughtsTextfeild>{
+
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController contentController = TextEditingController();
+  List<bool> Toggle = [false];
+
+
+  @override
+  Widget build(BuildContext context) {
+
+     
+
+    Constants cons = Constants(context: context);
+
+    //! ============================================================================ TextFeild Region ===========================================================
+    TextFormField title_text = TextFormField(controller: titleController,cursorColor: const Color(0xff7d7b7d),style: const TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold),
+    decoration: InputDecoration(hintText: "Title",hintStyle: TextStyle(color: Colors.white54),enabledBorder:UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),focusedBorder:UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)) ),);
+    
+    TextFormField content_text =  TextFormField(controller: contentController,cursorColor: Color(0xff7d7b7d),keyboardType: TextInputType.multiline,maxLines: 10,style: TextStyle(color: Colors.white),
+    decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder:InputBorder.none ,hintText: "Tell me what in your mind ..."));
+
+    //! ============================================================================ Toggle Button ===========================================================
+    Icon save_icon = Icon(Toggle[0]? Icons.bookmark  : Icons.bookmark_outline,size: 30);
+    ToggleButtons Buttons = ToggleButtons(children: [save_icon], isSelected: Toggle,onPressed: (int index) => changeToggle(index),color: Colors.grey,selectedColor: Colors.white,fillColor: Colors.transparent,splashColor: Colors.transparent);
+
+
+    //! ============================================================================ Controls ===========================================================
+    Column Note_Container_Controls = Column(children: [title_text,content_text,Row(children: [Buttons])],spacing: 0);
+    
+    BoxDecoration widget_decor = BoxDecoration(border: Border.all(color: cons.Container_borderColor,width: 3),color: cons.Container_fillColor,borderRadius: BorderRadius.circular(12));
+    return Container(child: Note_Container_Controls,decoration: widget_decor,padding: const EdgeInsets.all(5),);
+
+  }
+
+
+  void changeToggle(int index) => setState(() => Toggle[index] = !Toggle[index]);
+  
+
+
+}
+
+
+
 
 
 class HomeWidget extends StatefulWidget{
