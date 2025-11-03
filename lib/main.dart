@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tawasul/screens/Thoughts.dart';
 import 'package:tawasul/screens/camera.dart';
+import 'package:tawasul/screens/notes.dart';
+
 import 'package:tawasul/screens/onboard/welcome.dart';
 import 'package:tawasul/screens/onboard/onboarding.dart';
 import 'package:tawasul/provider/theme.dart';
@@ -20,7 +22,9 @@ class MyApp extends StatelessWidget {
       "/":(context) => Welcome(),
       "/onboarding": (context) => Onboarding(),
       "/thoughts":(context) => Thoughts(),
-      "/camera": (context) => Camera()
+      "/camera": (context) => Camera(),
+      "/notes": (context) => Note()
+
     };
 
     

@@ -12,8 +12,10 @@ class AppDrawer extends StatelessWidget {
     DrawerHeader drawerHeader = DrawerHeader(decoration: BoxDecoration(color: cons.main_color),child: Identity());
 
     List<Widget> pages = [drawerHeader,
+      Card(child: page_listtile(context: context, icon: Icons.description, page_name: "Notes",desc: "Save Your Ideas here", route_name: "/notes"),color: cons.main_color,shadowColor:cons.Container_fillColor ,),
       Card(child: page_listtile(context: context, icon: Icons.psychology_alt, page_name: "Thoughts",desc: "Understand your mood better", route_name: "/thoughts"),color: cons.main_color,shadowColor:cons.Container_fillColor ,),
       Card(child: page_listtile(context: context, icon: Icons.camera_alt, page_name: "Camera",desc: "Pictures speak beyond words", route_name: "/camera"),color: cons.main_color,shadowColor:cons.Container_fillColor ,)
+
 
     ];
 

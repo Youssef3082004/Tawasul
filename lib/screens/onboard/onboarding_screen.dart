@@ -25,7 +25,7 @@ class Onboarding_screen extends StatelessWidget {
     Text subTitle_text = Text(Subtitle,textAlign: TextAlign.center,style: TextStyle(color:Colors.white,fontSize: 10,fontFamily: "Inter"),);
     Column Text_column = Column(children: [Title_text,subTitle_text],spacing: 5,);
 
-    FilledButton Start_button = FilledButton(onPressed: ()=> Navigator.pushNamedAndRemoveUntil(context, "/thoughts", (route) => false), child: Text("Continue",style: TextStyle(fontWeight: FontWeight.w900),),style: cons.Button_style);
+    FilledButton Start_button = FilledButton(onPressed: ()=> Navigator.pushNamedAndRemoveUntil(context, "/notes", (route) => false), child: Text("Continue",style: TextStyle(fontWeight: FontWeight.w900),),style: cons.Button_style);
 
 
 
