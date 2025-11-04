@@ -39,12 +39,19 @@ class _Home extends State<StatisticssWidget>{
 
   Widget ClassPercentage({required String Class_text,required double Percentage,Color loaded =const Color(0xff157fec)  }){
     Constants cons = Constants(context: context);
+
     Text subtitle = Text(Class_text,style:TextStyle(color: Colors.white,fontWeight: FontWeight.w500,fontSize: 15),);
-    LinearProgressIndicator probability = LinearProgressIndicator(value: Percentage,backgroundColor: Color(0xffd9d9d9),color: loaded,borderRadius: BorderRadius.circular(10),);
+    Container dot = Container(width: 12.0,height: 12, decoration: BoxDecoration(color: loaded,shape: BoxShape.circle ));
+
+    Row class_row = Row(children: [dot,subtitle],spacing: 5,);
+
+    LinearProgressIndicator probability = LinearProgressIndicator(value: Percentage,backgroundColor: Color(0xff334155),color: loaded,borderRadius: BorderRadius.circular(10),);
     Text probability_text = Text("${(Percentage * 100).toInt()} %",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700),);
-    SizedBox Sized_probability = SizedBox(child: probability,width: cons.screen_width - 100,height: 10,);
-    Row probability_row = Row(children: [Sized_probability,probability_text],mainAxisAlignment: MainAxisAlignment.spaceEvenly);
-    return Column(children: [subtitle,probability_row],crossAxisAlignment: CrossAxisAlignment.start,spacing: 5,);
+    SizedBox Sized_probability = SizedBox(child: probability,width: cons.screen_width - 200,height: 10,);
+    Row probability_row = Row(children: [Sized_probability,probability_text],mainAxisAlignment: MainAxisAlignment.spaceEvenly,spacing: 10,);
+
+
+    return Row(children: [class_row,probability_row],crossAxisAlignment: CrossAxisAlignment.center,spacing: 5,mainAxisAlignment: MainAxisAlignment.spaceBetween,);
   }
 
 
@@ -56,7 +63,7 @@ class _Home extends State<StatisticssWidget>{
     Text Class = Text(Class_text,style: TextStyle(color: Color(0xff13ec13),fontWeight: FontWeight.w800));
     Row class_row = Row(children: [Primaery,Class],spacing: 5);
 
-    Text Desc = Text(style: TextStyle(color: cons.Container_borderColor,fontWeight: FontWeight.w500),textAlign: TextAlign.left,"Our analysis indicates that the dominant emotion\ndisplayed is happiness. This is often characteriæd\nby smiling. raised cheeks and crinkling around the\neyes.");
+    Text Desc = Text(style: TextStyle(color: Colors.white54,fontWeight: FontWeight.w500),textAlign: TextAlign.left,"Our analysis indicates that the dominant emotion\ndisplayed is happiness. This is often characteriæd\nby smiling. raised cheeks and crinkling around the\neyes.");
     Row Desc_Row  = Row(children: [Desc]);
     
     Column Class_Column = Column(children: [class_row,Desc_Row],spacing: 5);

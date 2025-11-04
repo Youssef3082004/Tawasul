@@ -16,10 +16,13 @@ class Constants {
 
   Color get main_color => Color(0xff101922);
 
-  Color get Container_borderColor => Color(0xff7d7b7d);
-  Color get Container_fillColor => Color(0xff27272a);
+  Color get Container_borderColor => Color(0xff334155);
+  Color get Container_fillColor => Color(0xff15222e);
+  Color get SecondColor => Color(0xff137FEC);
 
-  BoxDecoration get Container_decor =>  BoxDecoration(border: Border.all(color: Color(0xff7d7b7d),width: 3),color: Color(0xff27272a),borderRadius: BorderRadius.circular(12));
+
+
+  BoxDecoration get Container_decor =>  BoxDecoration(border: Border.all(color: Color(0xff334155),width: 3),color: Color(0xff15222e),borderRadius: BorderRadius.circular(12));
    
 
 

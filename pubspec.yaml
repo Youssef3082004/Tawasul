@@ -39,6 +39,7 @@ dependencies:
   smooth_page_indicator: ^1.2.1
   flutter_native_splash: ^2.4.7
   flutter_launcher_icons: ^0.14.4
+  fl_chart: ^1.1.1
 
 flutter_native_splash:
   color: "#ffffff" 

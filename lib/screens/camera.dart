@@ -17,8 +17,7 @@ class Camera extends StatefulWidget{
 class _Home extends State<Camera>{
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController contentController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context){

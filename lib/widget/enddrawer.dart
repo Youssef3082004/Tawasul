@@ -14,9 +14,10 @@ class AppDrawer extends StatelessWidget {
     List<Widget> pages = [drawerHeader,
       Card(child: page_listtile(context: context, icon: Icons.description, page_name: "Notes",desc: "Save Your Ideas here", route_name: "/notes"),color: cons.main_color,shadowColor:cons.Container_fillColor ,),
       Card(child: page_listtile(context: context, icon: Icons.psychology_alt, page_name: "Thoughts",desc: "Understand your mood better", route_name: "/thoughts"),color: cons.main_color,shadowColor:cons.Container_fillColor ,),
-      Card(child: page_listtile(context: context, icon: Icons.camera_alt, page_name: "Camera",desc: "Pictures speak beyond words", route_name: "/camera"),color: cons.main_color,shadowColor:cons.Container_fillColor ,)
-
-
+      Card(child: page_listtile(context: context, icon: Icons.camera_alt, page_name: "Camera",desc: "Pictures speak beyond words", route_name: "/camera"),color: cons.main_color,shadowColor:cons.Container_fillColor ,),
+      Card(child: page_listtile(context: context, icon: Icons.query_stats_rounded, page_name: "EmoGraph",desc: "Emotion Trends and Patterns", route_name: "/emograph"),color: cons.main_color,shadowColor:cons.Container_fillColor ,),
+      Card(child: page_listtile(context: context, icon: Icons.help_center_outlined, page_name: "Help & Support",desc: "How can you use it?", route_name: "/help"),color: cons.main_color,shadowColor:cons.Container_fillColor ,),
+      Card(child: page_listtile(context: context, icon: Icons.info_outlined, page_name: "About us",desc: "Who are we?", route_name: "/aboutus"),color: cons.main_color,shadowColor:cons.Container_fillColor ,),
     ];
 
     ListView Elements = ListView(children: pages,padding: EdgeInsets.zero,); 
@@ -34,8 +35,13 @@ class AppDrawer extends StatelessWidget {
 
    return ListTile(leading:Leading_icon ,trailing: trailing_icon,title:title ,subtitle: subtitle,
             onTap: () {
-            Navigator.pop(context);
-            Navigator.pushReplacementNamed(context, route_name);}
+              if (ModalRoute.of(context)?.settings.name != route_name){
+                Navigator.pop(context);
+                Navigator.pushReplacementNamed(context, route_name);
+              }
+              else {Scaffold.of(context).closeDrawer();}              
+              
+              }
           );
   }
 }

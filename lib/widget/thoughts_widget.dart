@@ -29,11 +29,11 @@ class _ThoughtsTextfeild extends State<ThoughtsTextfeild>{
     Constants cons = Constants(context: context);
 
     //! ============================================================================ TextFeild Region ===========================================================
-    TextFormField title_text = TextFormField(controller: titleController,cursorColor: const Color(0xff7d7b7d),style: const TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold),
-    decoration: InputDecoration(hintText: "Title",hintStyle: TextStyle(color: Colors.white54),enabledBorder:UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),focusedBorder:UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)) ),);
+    TextFormField title_text = TextFormField(controller: titleController,cursorColor: Colors.white54,style: const TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold),
+    decoration: InputDecoration(fillColor: cons.Container_fillColor,hintText: "Title",hintStyle: TextStyle(color: Colors.white54),enabledBorder:UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),focusedBorder:UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)) ),);
     
-    TextFormField content_text =  TextFormField(controller: contentController,cursorColor: Color(0xff7d7b7d),keyboardType: TextInputType.multiline,maxLines: 10,style: TextStyle(color: Colors.white),
-    decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder:InputBorder.none ,hintText: "Tell me what in your mind ..."));
+    TextFormField content_text =  TextFormField(controller: contentController,cursorColor: Colors.white54,keyboardType: TextInputType.multiline,maxLines: 10,style: TextStyle(color: Colors.white),
+    decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder:InputBorder.none ,hintText: "Tell me what in your mind ...",hintStyle: TextStyle(color: Colors.white54,fontSize: 18),fillColor: cons.Container_fillColor));
 
     //! ============================================================================ Toggle Button ===========================================================
     Icon save_icon = Icon(Toggle[0]? Icons.bookmark  : Icons.bookmark_outline,size: 30);
