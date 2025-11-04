@@ -29,7 +29,7 @@ class Onboarding_screen extends StatelessWidget {
 
 
 
-    Column Controls = Column(children: [title_column,page_image_container,Text_column,button? Start_button:SizedBox.shrink()],spacing: 40);    
+    Column Controls = Column(children: [title_column,page_image_container,Text_column,button? Start_button:SizedBox.shrink()],spacing: 45);    
     Container main_App = Container(color:cons.main_color,child: Controls,width: cons.screen_width,padding: EdgeInsets.only(top: 70),);
     return Scaffold(body: Center(child: main_App));
   }

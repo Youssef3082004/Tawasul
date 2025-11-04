@@ -20,6 +20,14 @@ class _Home extends State<Thoughts>{
   final TextEditingController titleController = TextEditingController();
   final TextEditingController contentController = TextEditingController();
 
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    contentController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context){
     Constants cons = Constants(context: context);

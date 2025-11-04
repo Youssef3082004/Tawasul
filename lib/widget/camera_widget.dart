@@ -61,10 +61,10 @@ class _Home extends State<StatisticssWidget>{
 
     Text Primaery =  Text("Primary Emotion:",style:TextStyle(color: Colors.white,fontWeight: FontWeight.bold));
     Text Class = Text(Class_text,style: TextStyle(color: Color(0xff13ec13),fontWeight: FontWeight.w800));
-    Row class_row = Row(children: [Primaery,Class],spacing: 5);
+    Row class_row = Row(children: [Primaery,Expanded(child: Class)],spacing: 5);
 
-    Text Desc = Text(style: TextStyle(color: Colors.white54,fontWeight: FontWeight.w500),textAlign: TextAlign.left,"Our analysis indicates that the dominant emotion\ndisplayed is happiness. This is often characteriæd\nby smiling. raised cheeks and crinkling around the\neyes.");
-    Row Desc_Row  = Row(children: [Desc]);
+    Text Desc = Text(style: TextStyle(color: Colors.white54,fontWeight: FontWeight.w500,),maxLines: 10,overflow:TextOverflow.visible,softWrap: true,textWidthBasis: TextWidthBasis.parent,textAlign: TextAlign.left,"Our analysis indicates that the dominant emotion displayed is happiness. This is often characteriæd by smiling. raised cheeks and crinkling around the eyes.");
+    Row Desc_Row  = Row(children: [Expanded(child: Desc)],mainAxisAlignment: MainAxisAlignment.start,);
     
     Column Class_Column = Column(children: [class_row,Desc_Row],spacing: 5);
     return  Container(child: Class_Column,padding: EdgeInsets.all(10),decoration: cons.Container_decor,width: cons.screen_width,);

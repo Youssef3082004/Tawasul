@@ -36,7 +36,7 @@ class _Welcome extends State<Welcome>{
     Column page_end = Column(children: [start_text,subTitle,SizedBox(child: Start_button,width: cons.screen_width - 100,)],mainAxisAlignment: MainAxisAlignment.center,crossAxisAlignment: CrossAxisAlignment.start,spacing:5);
 
 
-    Column Controls = Column(children: [Text_column,page_end],spacing: 520,);
+    Column Controls = Column(children: [Text_column,page_end],spacing: 400,);
     Container main_app = Container(child: Controls,width: cons.screen_width,padding: EdgeInsets.only(top: 100),decoration: BoxDecoration(image:DecorationImage(image: AssetImage('assets/images/welcome.png'),fit: BoxFit.cover))); 
     return Scaffold(body: Center(child: main_app));
   }

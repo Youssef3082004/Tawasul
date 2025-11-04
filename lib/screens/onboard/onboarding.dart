@@ -20,8 +20,8 @@ class _Onboarding extends State<Onboarding>{
 
   late final PageController _pageController;
   final pages = [
-    Onboarding_screen(Title: "Understand Your Emotions Enhance Your Well-being", Subtitle:"Discover insights into your emotional state through your words and expressions. Powered by advanced AI for personalized understanding." , image: "assets/images/onboarding1.png"),
-    Onboarding_screen(Title: "Understand Your Emotions Through Your Words", Subtitle:"Our app analyzes your text to reveal emotional patterns, helping you gain deeper self-awareness and improve your mental well-being." , image: "assets/images/onboarding2.png"),
+    Onboarding_screen(Title: "Enhance Your Well-being", Subtitle:"Discover insights into your emotional state through your words and expressions. Powered by advanced AI for personalized understanding." , image: "assets/images/onboarding1.png"),
+    Onboarding_screen(Title: "Understand Emotions Through Words", Subtitle:"Our app analyzes your text to reveal emotional patterns, helping you gain deeper self-awareness and improve your mental well-being." , image: "assets/images/onboarding2.png"),
     Onboarding_screen(Title: "Understand Your Emotions Visually", Subtitle:"Our app analyzes facial expressions from your photos to provide emotional insights, helping you better understand your feelings." , image: "assets/images/onboarding3.png"),
     Onboarding_screen(Title: "Monitor Your Emotions with Graphs", Subtitle:'See how your emotions change over time and uncover your unique emotional trends' , image: "assets/images/onboarding4.png",button: true),
   ];
