@@ -17,7 +17,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
 # Depi Round 3 - Year 2025 - month Octobor
-version: 3.2025.10+1
+version: 3.2025.11+1
 
 environment:
   sdk: ^3.9.0
@@ -54,7 +54,7 @@ flutter_native_splash:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/icon2.png"
+  image_path: "assets/images/logo2.png"
   min_sdk_android: 21 
 
 

@@ -67,38 +67,46 @@ class HelpSupport extends StatelessWidget {
                             bottom: BorderSide(color: borderDark),
                           ),
                         ),
-                        child: ExpansionTile(
-                          leading: Icon(Icons.help_outline_sharp,color: cons.SecondColor,),
-                          collapsedIconColor: primary,
-                          iconColor: primary,
-                          tilePadding: EdgeInsets.zero,
-                          shape: Border(),
-                          collapsedShape: Border(),
-                          title: Text(
-                            faq['question']!,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: primary,
-                            ),
-                          ),
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 12.0),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  faq['answer']!,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: grayText,
-                                    height: 1.5,
+                        child: Theme(
+                                    data: Theme.of(context).copyWith(
+                                      splashColor: Colors.transparent,       // removes ripple
+                                      highlightColor: Colors.transparent,    // removes tap highlight
+                                      // dividerColor: Colors.transparent,      // optional: remove divider line if needed
+                                    ),
+                                    child: ExpansionTile(
+                                      leading: Icon(Icons.help_outline_sharp, color: cons.SecondColor),
+                                      collapsedIconColor: primary,
+                                      collapsedBackgroundColor: Colors.transparent,
+                                      iconColor: primary,
+                                      tilePadding: EdgeInsets.zero,
+                                      shape: Border(),
+                                      collapsedShape: Border(),
+                                      title: Text(
+                                        faq['question']!,
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                          color: primary,
+                                        ),
+                                      ),
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(bottom: 12.0),
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              faq['answer']!,
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: grayText,
+                                                height: 1.5,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
                       ),
                     )
                     .toList(),
