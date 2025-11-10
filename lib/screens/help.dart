@@ -47,7 +47,7 @@ class HelpSupport extends StatelessWidget {
   },
   
 ];
-    AppBar page_appbar = AppBar(title: Text("Help & Support"),leading: IconButton(icon: Icon(Icons.menu,color: Colors.white,),onPressed: () => _scaffoldKey.currentState!.openDrawer()),);
+    AppBar page_appbar = AppBar(title: Text("Help & Support"),leading: IconButton(icon: Icon(Icons.menu,color: Colors.white,),onPressed: () => _scaffoldKey.currentState!.openDrawer()),scrolledUnderElevation: 0);
 
     return Scaffold(key: _scaffoldKey,appBar: page_appbar,drawer: AppDrawer(),
       backgroundColor: cons.main_color,

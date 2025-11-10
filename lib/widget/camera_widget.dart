@@ -1,10 +1,11 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:tawasul/constants.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
+// import 'package:image_picker/image_picker.dart';
+// import 'dart:io';
 
 
-final GlobalKey<_Home> statisticsKey = GlobalKey<_Home>();
+// final GlobalKey<_Home> statisticsKey = GlobalKey<_Home>();
 
 class StatisticssWidget extends StatefulWidget{
   const StatisticssWidget({super.key});
@@ -16,7 +17,7 @@ class StatisticssWidget extends StatefulWidget{
 
 class _Home extends State<StatisticssWidget>{
 
-  File? fileimage;
+  
 
   @override
   Widget build(BuildContext context){
@@ -73,31 +74,24 @@ class _Home extends State<StatisticssWidget>{
 
 
   void AnalyzeFunction() => setState((){});
+}
 
 
 
-  Future<void> _getimage(ImageSource Source) async{
-    final ImagePicker picker = ImagePicker();
-    final XFile? photo = await picker.pickImage(source: Source);
-    if (photo != null){
-        setState(() => fileimage = File(photo.path));
-      }
-    }
 
 
-    void showPickerDialog(BuildContext context) {
+
+
+class ChoosedImage extends StatelessWidget{
+
+  final File? fileimage;
+  const ChoosedImage({super.key,required this.fileimage});
+
+
+  @override
+  Widget build(BuildContext context) {
     Constants cons = Constants(context: context);
-    ListTile photo = ListTile(leading: const Icon(Icons.camera_alt,color: Color(0xff157fec),),title: Text('Take Photo',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 15),),onTap:() {Navigator.of(context).pop();_getimage(ImageSource.camera);},);
-    ListTile gallery = ListTile(leading: const Icon(Icons.photo_library,color:Color(0xff157fec)),title: Text('Choose from Gallery',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 15),),onTap: () {Navigator.of(context).pop();_getimage(ImageSource.gallery);});
-    Wrap Controls = Wrap(children: [photo,gallery]);
-    showModalBottomSheet(backgroundColor: cons.main_color,context: context,builder: (BuildContext context) => SafeArea(child: Controls));
+    Container ImageContainer =  Container(child: Image.file(fileimage!,fit: BoxFit.fill),width: cons.screen_width - 20,height: 200,decoration: BoxDecoration(borderRadius: BorderRadius.circular(12),color: Colors.grey.shade200, ));
+    return ClipRRect(borderRadius: BorderRadius.circular(12), child: ImageContainer);
   }
-
-  
-
-  
-
-
-
-
 }

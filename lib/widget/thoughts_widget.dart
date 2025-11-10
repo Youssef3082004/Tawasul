@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tawasul/constants.dart';
+import 'package:tawasul/database.dart';
+import 'package:tawasul/provider/ThoughtsProvider.dart';
+import 'package:tawasul/widget/CustomWidget.dart';
+import 'package:intl/intl.dart';
+
+
 
 
 
@@ -18,28 +25,53 @@ class _ThoughtsTextfeild extends State<ThoughtsTextfeild>{
 
   final TextEditingController titleController = TextEditingController();
   final TextEditingController contentController = TextEditingController();
-  List<bool> Toggle = [false];
+  GlobalKey<FormState> titlestate = GlobalKey();
 
+  GlobalKey<FormState> textstate = GlobalKey();
+
+  final dbHelper = DatabaseHelper();
+
+  List<bool> Toggle = [false];
+  
 
   @override
   Widget build(BuildContext context) {
 
-     
-
     Constants cons = Constants(context: context);
+    bool FilledTitle = Provider.of<Thoughtsprovider>(context).isFillTitle;
+    bool FilledText = Provider.of<Thoughtsprovider>(context).isFillText;
+    bool Analyzed = Provider.of<Thoughtsprovider>(context).isAnalyzed;
+
+    
+    
 
     //! ============================================================================ TextFeild Region ===========================================================
-    TextFormField title_text = TextFormField(controller: titleController,cursorColor: Colors.white54,style: const TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold),
-    decoration: InputDecoration(fillColor: cons.Container_fillColor,hintText: "Title",hintStyle: TextStyle(color: Colors.white54),enabledBorder:UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),focusedBorder:UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)) ),);
-    
-    TextFormField content_text =  TextFormField(controller: contentController,cursorColor: Colors.white54,keyboardType: TextInputType.multiline,maxLines: 10,style: TextStyle(color: Colors.white),
-    decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder:InputBorder.none ,hintText: "Tell me what in your mind ...",hintStyle: TextStyle(color: Colors.white54,fontSize: 18),fillColor: cons.Container_fillColor));
+
+    Consumer title_text = Consumer<Thoughtsprovider>(
+      builder: (context, provider, child) {
+    return Form(key: titlestate,
+      child: TextFormField(controller: titleController,validator: (value) => contentTitle(value),onChanged: (value) => Provider.of<Thoughtsprovider>(context,listen: false).ToggleEmptyTitle(value.length >= 3),autovalidateMode: AutovalidateMode.onUserInteraction,cursorColor: Colors.white54,style: const TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold),
+      decoration: InputDecoration(fillColor: cons.Container_fillColor,hintText: "Title",hintStyle: TextStyle(color: Colors.white54),enabledBorder:UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),focusedBorder:UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)) ),),
+    );
+  },
+);
+
+
+     Consumer content_text = Consumer<Thoughtsprovider>(
+      builder: (context, provider, child) {
+    return Form(key:textstate,
+    child: TextFormField(controller: contentController,validator: (value) => contentText(value!),onChanged: (value) => Provider.of<Thoughtsprovider>(context,listen: false).ToggleEmptyText(value.length >= 12),autovalidateMode: AutovalidateMode.onUserInteraction,cursorColor: Colors.white54,keyboardType: TextInputType.multiline,maxLines: 10,style: TextStyle(color: Colors.white),
+      decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder:InputBorder.none ,hintText: "Tell me what in your mind ...",hintStyle: TextStyle(color: Colors.white54,fontSize: 18),fillColor: cons.Container_fillColor)),
+    );
+  },
+);
+
+
 
     //! ============================================================================ Toggle Button ===========================================================
     Icon save_icon = Icon(Toggle[0]? Icons.bookmark  : Icons.bookmark_outline,size: 30);
-    ToggleButtons Buttons = ToggleButtons(children: [save_icon], isSelected: Toggle,onPressed: (int index) => changeToggle(index),color: Colors.grey,selectedColor: Colors.white,fillColor: Colors.transparent,splashColor: Colors.transparent);
-
-
+    ToggleButtons Buttons = ToggleButtons(children: [save_icon], isSelected: Toggle,onPressed:Analyzed && FilledTitle && FilledText ? (int index) => changeToggle(index): null,color: Colors.white,selectedColor: Colors.white,fillColor: Colors.transparent,splashColor: Colors.transparent,disabledColor: Colors.grey);
+    
     //! ============================================================================ Controls ===========================================================
     Column Note_Container_Controls = Column(children: [title_text,content_text,Row(children: [Buttons])],spacing: 0);
     
@@ -48,8 +80,50 @@ class _ThoughtsTextfeild extends State<ThoughtsTextfeild>{
 
   }
 
+  
+    String? contentText(String? value) {
+      if (value == null || value.trim().isEmpty) {return "Please enter some text";} 
+      else if (value.trim().length < 12) {return "Please enter at least 12 characters";}
+      return null; 
+    }
+  
 
-  void changeToggle(int index) => setState(() => Toggle[index] = !Toggle[index]);
+  String? contentTitle(String? value) {
+      if (value == null || value.trim().isEmpty) {return "Please enter any Title";} 
+      else if (value.trim().length < 3) {return "Please enter at least 3 characters";}
+      return null; 
+    }
+  
+
+
+  void changeToggle(int index) async {
+  setState(() => Toggle[index] = !Toggle[index]);
+
+  if (Toggle[index] == true && titleController.text.isNotEmpty) {
+    await addNote();
+    if (!mounted) return;
+    Customwidgets.showCustomSnackBar(context: context,message: "Note saved successfully",isError: false);
+  } 
+  else {
+
+    final lastNoteId = await dbHelper.getLastNoteId();
+    await dbHelper.deleteNote(lastNoteId);
+    if (!mounted) return;
+    Customwidgets.showCustomSnackBar(context: context,message: "Note removed from your list",isError: true);
+  }
+}
+
+
+  Future<void> addNote() async {
+    DateTime now = DateTime.now();
+    String dateStr = DateFormat('yyyy-MM-dd').format(now);
+    String timeStr = DateFormat('hh:mm a').format(now);
+
+    await dbHelper.insertNote({'title': titleController.text,'content': contentController.text,
+      'date': dateStr,'time': timeStr,'contentState': 'Surprise',
+    });
+}
+
   
 
 
@@ -60,8 +134,8 @@ class _ThoughtsTextfeild extends State<ThoughtsTextfeild>{
 
 
 class HomeWidget extends StatefulWidget{
-
-  const HomeWidget({super.key});
+  final double ClassPercentage;
+  const HomeWidget({super.key,required this.ClassPercentage});
 
   @override
   State<HomeWidget> createState() => _Home();
@@ -85,8 +159,8 @@ class _Home extends State<HomeWidget>{
 
 
    
-    LinearProgressIndicator probability = LinearProgressIndicator(value: 0.75,backgroundColor: Color(0xffd9d9d9),color: Color(0xff157fec),borderRadius: BorderRadius.circular(10),);
-    Text probability_text = Text("75 %",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700),);
+    LinearProgressIndicator probability = LinearProgressIndicator(value: widget.ClassPercentage,backgroundColor: Color(0xffd9d9d9),color: Color(0xff157fec),borderRadius: BorderRadius.circular(10),);
+    Text probability_text = Text("${(widget.ClassPercentage*100).toInt()} %",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700),);
     SizedBox Sized_probability = SizedBox(child: probability,width: cons.screen_width - 100,height: 10,);
     Row probability_row = Row(children: [Sized_probability,probability_text],mainAxisAlignment: MainAxisAlignment.spaceEvenly);
 

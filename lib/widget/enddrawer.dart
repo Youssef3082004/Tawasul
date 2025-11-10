@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tawasul/constants.dart';
+import 'package:tawasul/widget/CustomWidget.dart';
 
 
 class AppDrawer extends StatelessWidget {

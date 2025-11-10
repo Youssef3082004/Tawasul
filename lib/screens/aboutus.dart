@@ -16,7 +16,7 @@ class AboutUs extends StatelessWidget {
     Color backgroundDark = cons.main_color;
     const Color textPrimary = Colors.white;
     const Color textPrimary80 = Colors.white54;
-    AppBar page_appbar = AppBar(title: Text("About us"),leading: IconButton(icon: Icon(Icons.menu,color: Colors.white,),onPressed: () => _scaffoldKey.currentState!.openDrawer()),);
+    AppBar page_appbar = AppBar(title: Text("About us"),leading: IconButton(icon: Icon(Icons.menu,color: Colors.white,),onPressed: () => _scaffoldKey.currentState!.openDrawer()),scrolledUnderElevation: 0,);
 
     Image Logo_image = Image.asset("assets/images/logo.png",fit: BoxFit.cover,);
     SizedBox image_container = SizedBox(child: Logo_image,width: 200,);

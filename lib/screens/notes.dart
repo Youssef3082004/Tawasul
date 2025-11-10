@@ -1,7 +1,11 @@
 import "package:flutter/material.dart";
 import 'package:tawasul/constants.dart';
+import 'package:tawasul/database.dart';
 import 'package:tawasul/widget/enddrawer.dart';
 import 'package:tawasul/widget/note_widget.dart';
+import 'package:tawasul/widget/CustomWidget.dart';
+
+
 
 
 class Note extends StatefulWidget{
@@ -17,11 +21,12 @@ class Note extends StatefulWidget{
 class _Home extends State<Note>{
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-
+  final dbHelper = DatabaseHelper();
   final List<String> selectedEmotions = ["All"];
+  List<Map<String, dynamic>> notes = [];
 
   // final List<String> emotions = ["All","Happy","Love","Anger","Sadness","Surprise","Fear"];
+  // {id: 9, title: gggggg, content: ggggggggggg, date: 2025-11-05T01:57:19.551640, contentState: happy}
 
 
 
@@ -35,33 +40,38 @@ class _Home extends State<Note>{
     {"name": "Fear", "icon": Icons.sentiment_neutral, "color": Colors.purple},
   ];
 
+
+  @override
+  void initState() {
+    super.initState();
+    loadNotes();
+  }
+
   @override
   Widget build(BuildContext context){
     Constants cons = Constants(context: context);
 
-    //! ==================================================================== Appbar =============================================
-    AppBar page_appbar = AppBar(title: Text("Notes"),leading: IconButton(icon: Icon(Icons.menu,color: Colors.white,),onPressed: () => _scaffoldKey.currentState!.openDrawer()),);
+    
+    //! ==================================================================== Appbar =============================================    
+    PopupMenuButton h =  PopupMenuButton(icon: Icon(Icons.more_vert, color: Colors.white),color: cons.main_color.withValues(alpha: 0.9),onSelected: (value)=> PopupMenuButtonfunction(value),borderRadius: BorderRadius.circular(20),
+    itemBuilder: (context) =>[PopupMenuItem(value: 1,child: Row(children: [Icon(Icons.delete, color: Colors.white),Text("Clear Notes",style: TextStyle(color: Colors.white)),],spacing: 10,),)]);
+
+    AppBar page_appbar = AppBar(title: Text("Notes"),leading: IconButton(icon: Icon(Icons.menu,color: Colors.white,),onPressed: () => _scaffoldKey.currentState!.openDrawer()),actions: [h],scrolledUnderElevation: 0);
 
     //! ==================================================================== Statisticss class Widget =============================================
     ListView chipList = ListView(scrollDirection: Axis.horizontal,children: emotions.map((Map emotion) => Multiselected(emotion)).toList());
 
     //! ==================================================================== Statisticss class Widget =============================================
-    List<Widget> Notes = [
-      NoteWidget(Title: "Today was a really good day",subtitle: "May 20, 2024",Iconcolor: Colors.white,leadingicon: Icons.abc,),
-      NoteWidget(Title: "Feeling a bit down, not sure",subtitle: "May 20, 2024",Iconcolor: Colors.white,leadingicon: Icons.abc,),
-      NoteWidget(Title: "The meeting was stressful",subtitle: "May 20, 2024",Iconcolor: Colors.white,leadingicon: Icons.abc,),
-    
-      
-      
-    ];
-    
+    Iterable<NoteWidget> Notes = notes.map((Map Element) => NotesBuilder(Element));
     Column Notes_Column = Column(children: [...Notes],spacing: 10);
-
-
     FloatingActionButton Add_button = FloatingActionButton(onPressed: ()=> Navigator.pushNamedAndRemoveUntil(context, "/thoughts", (route) => false),child: Icon(Icons.add,color: Colors.white),backgroundColor: Color(0xff157fec),);
     //! ==================================================================== Controls ===================================================
-    Column controls = Column(children: [SizedBox(child: chipList,height: 50),Notes_Column],mainAxisAlignment: MainAxisAlignment.start,spacing: 20,);
-    Container main_app = Container(child: SingleChildScrollView(child: controls,scrollDirection: Axis.vertical,),padding: EdgeInsets.only(left: 5,right: 5));
+    Padding Identit = Padding(padding: EdgeInsets.only(top: cons.screen_height/3.8),child: Identity(),);
+    Opacity NotClearIdentity = Opacity(opacity: 0.6,child: Identit,);
+    //! ==================================================================== Controls ===================================================
+
+    Column controls = Column(children: [SizedBox(child: chipList,height: 50),Notes.isEmpty? NotClearIdentity:Notes_Column],mainAxisAlignment: MainAxisAlignment.center,spacing: 20,);
+    Container main_app = Container(child: SingleChildScrollView(child: controls,scrollDirection: Axis.vertical,),padding: EdgeInsets.only(left: 5,right: 5),height: cons.screen_height,);
     return Scaffold(key: _scaffoldKey,body: main_app,appBar: page_appbar,backgroundColor: cons.main_color,drawer: AppDrawer(),floatingActionButton: Add_button,);
 
   }
@@ -71,9 +81,11 @@ class _Home extends State<Note>{
     final bool isSelected = selectedEmotions.contains(emotion["name"]);
     final Color iconColor = isSelected ? Colors.white : emotion["color"];
 
-    ChoiceChip button = ChoiceChip(label: Text(emotion["name"]), avatar: Icon(emotion["icon"],color: iconColor),showCheckmark: false,selected: isSelected,selectedColor:Color(0xff137fec),
-    labelStyle: TextStyle(color:  Colors.white),side: BorderSide(color: Colors.white,width: 2),backgroundColor: Color(0xff17202f),
-    onSelected: (selected) => hala(selected, emotion["name"]));
+    ChoiceChip button = ChoiceChip(label: Text(emotion["name"]), avatar: Icon(emotion["icon"],color: iconColor),showCheckmark: false,
+    selected: isSelected,selectedColor:Color(0xff137fec),surfaceTintColor: Colors.transparent,
+    shadowColor: Colors.transparent,selectedShadowColor: Colors.transparent,backgroundColor: Color(0xff17202f),
+    labelStyle: TextStyle(color:  Colors.white),side: BorderSide(color: Colors.transparent,width: 4),
+    onSelected: (selected) => SelectedEmotions(selected, emotion["name"]));
 
     return Padding(child: button,padding: const EdgeInsets.symmetric(horizontal: 4.0));
     
@@ -81,23 +93,72 @@ class _Home extends State<Note>{
   }
 
   
+  
 
-  void hala (bool selected,String emotion) => setState(() {
-                          if (selected && emotion != "All") {
-                            selectedEmotions.remove("All");
-                            selectedEmotions.add(emotion);
-                          }
+  void SelectedEmotions(bool selected, String emotion) async {
+  setState(() {
+    if (selected && emotion != "All") {
+      selectedEmotions.remove("All");
+      selectedEmotions.add(emotion);
+    } else if (selected && emotion == "All") {
+      selectedEmotions.clear();
+      selectedEmotions.add("All");
+    } else if (selectedEmotions.length > 1) {
+      selectedEmotions.remove(emotion);
+    }
+  });
 
-                          else if (selected && emotion == "All"){
-                            selectedEmotions.clear();
-                            selectedEmotions.add("All");
-                          }
+  await filterNotes();
+}
 
-                          else if (selectedEmotions.length > 1){ 
-                          
-                            selectedEmotions.remove(emotion);
-                          }
-                        });
+  
+  Future<void> filterNotes() async {
+    if (selectedEmotions.contains("All")) {
+      final data = await dbHelper.getNotes(); 
+      setState(() => notes = data);
+    } 
+    else {
+      final data = await dbHelper.getNotesByCategory(selectedEmotions);
+      setState(() => notes = data);
+    }
+  }
+
+
+
+  NoteWidget NotesBuilder(Map Element){
+    if (Element["contentState"] == "Happy"){
+      return NoteWidget(Iconcolor:Colors.amber,leadingicon: Icons.sentiment_satisfied_alt,NoteData: Element,);
+    }
+    else if (Element["contentState"] == "Love"){
+      return NoteWidget(Iconcolor:Colors.redAccent,leadingicon: Icons.favorite,NoteData: Element);
+    }
+    else if (Element["contentState"] == "Surprise"){
+      return NoteWidget(Iconcolor:Colors.orange,leadingicon: Icons.emoji_objects,NoteData: Element);
+    }
+
+    return NoteWidget(Iconcolor:Colors.amber,leadingicon: Icons.work,NoteData: Element);
+
+  }
+
+    
+  
+  Future<void> loadNotes() async {
+    final data = await dbHelper.getNotes();
+    setState(() => notes = data);
+  }
+
+
+
+  Future<void> DeleteNotes() async {
+    await dbHelper.deleteNotes();
+    setState(() => notes = []);
+  }
+
+
+  void PopupMenuButtonfunction( int value) async{
+    if (value == 1) {await DeleteNotes();} 
+  }
+
                       
 
 

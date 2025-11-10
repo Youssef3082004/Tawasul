@@ -13,12 +13,12 @@ class Constants {
 
   TextTheme get text => TextTheme.of(context);
 
-
   Color get main_color => Color(0xff101922);
+  Color get SecondColor => Color(0xff137FEC);
+
 
   Color get Container_borderColor => Color(0xff334155);
   Color get Container_fillColor => Color(0xff15222e);
-  Color get SecondColor => Color(0xff137FEC);
 
 
 
@@ -27,12 +27,15 @@ class Constants {
 
 
 
-  ButtonStyle get Button_style =>  ButtonStyle(backgroundColor: WidgetStatePropertyAll(Color(0xff137FEC)),shape: WidgetStatePropertyAll(
-    RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(10)),
-    ),
-  ),);
-
+  ButtonStyle get Button_style => ButtonStyle(
+  backgroundColor: WidgetStateProperty.resolveWith<Color>(
+    (Set<WidgetState> states) {
+      if (states.contains(WidgetState.disabled)) {return const Color(0xFF9E9E9E); }
+      return const Color(0xFF137FEC); 
+    },
+  ),
+  shape: const WidgetStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)),),),
+);
 
 
 
@@ -40,16 +43,3 @@ class Constants {
 
 
 
-class Identity extends StatelessWidget{
-
-  const Identity({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    Image Logo_image = Image.asset("assets/images/logo.png",fit: BoxFit.cover,);
-    SizedBox image_container = SizedBox(child: Logo_image,width: 200,);
-    Text Appliation_name = Text("Tawasul",style: TextStyle(fontSize: 30,color: Colors.white,fontFamily: "Pac"));
-    return Column(children: [image_container,Appliation_name],spacing: 0,);
-  }
-
-}

@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tawasul/provider/ThoughtsProvider.dart';
 import 'package:tawasul/screens/Thoughts.dart';
 import 'package:tawasul/screens/camera.dart';
 import 'package:tawasul/screens/emograph.dart';
 import 'package:tawasul/screens/notes.dart';
 import 'package:tawasul/screens/aboutus.dart';
 import 'package:tawasul/screens/help.dart';
-
-
 import 'package:tawasul/screens/onboard/welcome.dart';
 import 'package:tawasul/screens/onboard/onboarding.dart';
 import 'package:tawasul/provider/theme.dart';
+// import 'database.dart';
 
-void main() {
-  // runApp(MultiProvider(providers: [ChangeNotifierProvider(create: (context) => Mode()),ChangeNotifierProvider(create: (context) => Language())],child: MyApp()));
-  runApp(MyApp());
+
+
+
+
+void main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await DatabaseHelper().resetDatabase(); // delete old DB
+  runApp(MultiProvider(providers: [ChangeNotifierProvider(create: (context) => Thoughtsprovider())],child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

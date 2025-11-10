@@ -28,7 +28,7 @@ class _Home extends State<Emograph>{
     Constants cons = Constants(context: context);
 
     //! ==================================================================== Appbar =============================================
-    AppBar page_appbar = AppBar(title: Text("Emograph"),leading: IconButton(icon: Icon(Icons.menu,color: Colors.white,),onPressed: () => _scaffoldKey.currentState!.openDrawer()),);
+    AppBar page_appbar = AppBar(title: Text("Emograph"),leading: IconButton(icon: Icon(Icons.menu,color: Colors.white,),onPressed: () => _scaffoldKey.currentState!.openDrawer()),scrolledUnderElevation: 0);
 
     //! ==================================================================== Appbar =============================================
     Text title = Text("Your Emotional Trend",style: TextStyle(color:Colors.white,fontSize: 20,fontFamily: "inter",fontWeight: FontWeight.w600));
