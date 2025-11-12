@@ -4,31 +4,27 @@ import 'package:tawasul/constants.dart';
 
 
 
-
 class EmotionBreakdown extends StatelessWidget {
 
-  const EmotionBreakdown({super.key});
+  final Map<String, double> scores;
+  const EmotionBreakdown({super.key,required this.scores});
 
 
   @override
   Widget build(BuildContext context) {
 
-
+    
     Text title = Text("Emotion Breakdown",style: TextStyle(color:Colors.white,fontSize: 20,fontFamily: "inter",fontWeight: FontWeight.w600));
 
-    Widget class1 = ClassPercentage(context: context,Class_text: "Happy",Percentage: 0.75,loaded: Color(0xff13ec13));
-    Widget class2 = ClassPercentage(context: context,Class_text: "Sad",Percentage: 0.45);
-    Widget class3 = ClassPercentage(context: context,Class_text: "Natural",Percentage: 0.35,loaded: Colors.yellow.shade700);
-    Widget class4 = ClassPercentage(context: context,Class_text: "Anger",Percentage: 0.12,loaded: Colors.red);
+    Widget class1 = ClassPercentage(context: context,Class_text: scores.keys.first,Percentage: scores[scores.keys.first]?? 0.0,loaded: Color(0xff13ec13));
+    Widget class2 = ClassPercentage(context: context,Class_text: scores.keys.toList()[1],Percentage: scores[scores.keys.toList()[1]] ?? 0.0);
+    Widget class3 = ClassPercentage(context: context,Class_text: scores.keys.toList()[2],Percentage: scores[scores.keys.toList()[2]] ?? 0.0,loaded: Colors.yellow.shade700);
+    Widget class4 = ClassPercentage(context: context,Class_text: scores.keys.toList()[3],Percentage: scores[scores.keys.toList()[3]] ?? 0.0,loaded: Colors.red);
 
     
     
     Column controls = Column(children: [title,class1,class2,class3,class4],spacing: 10,crossAxisAlignment: CrossAxisAlignment.start,);
     return Container(child: controls,);
-  
-
-
-  
     
   }
 
@@ -49,13 +45,8 @@ class EmotionBreakdown extends StatelessWidget {
     return Row(children: [class_row,probability_row],crossAxisAlignment: CrossAxisAlignment.center,spacing: 5,mainAxisAlignment: MainAxisAlignment.spaceBetween,);
   }
 
-  
-
 
 }
-
-
-
 
 
 
@@ -73,30 +64,18 @@ class EmotionSnapshot extends StatelessWidget {
 
     Constants cons = Constants(context: context);
 
-    
-
     Text Title = Text(TitleText,style: TextStyle(color:Colors.white,fontSize: 20,fontWeight: FontWeight.w600),);
     Text subtitle = Text(SubtitleText,style:TextStyle(color:Colors.white54,fontSize: 16,fontWeight: FontWeight.w500));
     Column Texts = Column(children: [Title,subtitle],crossAxisAlignment: CrossAxisAlignment.start,);
-    
-    
-    Column controls = Column(children: [ClassPercentage(),Texts],spacing: 10,crossAxisAlignment: CrossAxisAlignment.start,);
+        
+    Column controls = Column(children: [KeyInsightsIcon(),Texts],spacing: 10,crossAxisAlignment: CrossAxisAlignment.start,);
     BoxDecoration graphContainerDecor = BoxDecoration(color: cons.Container_fillColor,borderRadius: BorderRadius.circular(15));
-
-    return Container(child: controls,decoration: graphContainerDecor,padding: EdgeInsets.all(10),height: 140,width: 150,);
-  
-
-
-  
-    
+    return Container(child: controls,decoration: graphContainerDecor,padding: EdgeInsets.all(10),height: 140,width: 150,);   
   }
 
-  Widget ClassPercentage(){
+  Widget KeyInsightsIcon(){
     Icon mainIcon = Icon(IconName,color: IconColor,size: 40);
     return Container(child: mainIcon,padding: EdgeInsets.all(8),decoration: BoxDecoration(color: IconColor.withValues(alpha: 0.2),borderRadius: BorderRadius.circular(10)),);
   }
-
-  
-
 
 }

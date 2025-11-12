@@ -79,16 +79,16 @@ class DatabaseHelper {
 
 
   Future<int> getLastNoteId() async {
-  final db = await database; // Make sure this opens your DB instance
-  final List<Map<String, dynamic>> result = await db.rawQuery(
-    'SELECT id FROM notes ORDER BY id DESC LIMIT 1',
-  );
-  if (result.isNotEmpty) {
-    return result.first['id'] as int;
-  } else {
-    return -1; 
+    final db = await database; // Make sure this opens your DB instance
+    final List<Map<String, dynamic>> result = await db.rawQuery(
+      'SELECT id FROM notes ORDER BY id DESC LIMIT 1',
+    );
+    if (result.isNotEmpty) {
+      return result.first['id'] as int;
+    } else {
+      return -1; 
+    }
   }
-}
 
 
   Future<void> resetDatabase() async {
@@ -98,4 +98,30 @@ class DatabaseHelper {
     print("Database deleted. It will be recreated on next access.");
   }
 
+
+  Future<Map<String, List<String>>> getEmotionsGroupedByDate(List<String> dates) async {
+    if (dates.isEmpty) return {};
+
+    final db = await database;
+    final placeholders = List.filled(dates.length, '?').join(', '); 
+    final List<Map<String, dynamic>> result = await db.query('notes',columns: ['date', 'contentState'],where: 'date IN ($placeholders)',whereArgs: dates,);
+
+    Map<String, List<String>> groupedEmotions = {};
+    for (var row in result) {
+      String date = row['date'] as String;
+      String emotion = row['contentState'] as String;
+      if (groupedEmotions.containsKey(date)) {
+        groupedEmotions[date]!.add(emotion);
+      } else {
+        groupedEmotions[date] = [emotion];
+      }
+    }
+
+    return groupedEmotions;
+  }
+
 }
+
+
+
+

@@ -32,12 +32,12 @@ class _LineChartSample2State extends State<LineChartGraph> {
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(fontWeight: FontWeight.bold,fontSize: 16,color:Colors.grey);
     String text = switch (value.toInt()) {
-      0 => "Day 1",
-      2 => 'Day 1',
-      4 => 'Day 3',
-      6 => 'Day 5',
-      8 => 'Day 7',
-      10 => 'Day 9',
+      0 => "5d ago",
+      2 => '4d ago',
+      4 => '3d ago',
+      6 => '2d ago',
+      8 => '1d ago',
+      10 => 'Today',
 
       _ => '',
     };

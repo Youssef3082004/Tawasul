@@ -120,7 +120,7 @@ class _ThoughtsTextfeild extends State<ThoughtsTextfeild>{
     String timeStr = DateFormat('hh:mm a').format(now);
 
     await dbHelper.insertNote({'title': titleController.text,'content': contentController.text,
-      'date': dateStr,'time': timeStr,'contentState': 'Surprise',
+      'date': dateStr,'time': timeStr,'contentState': 'Love',
     });
 }
 

@@ -1,5 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:tawasul/constants.dart';
+import 'package:tawasul/database.dart';
+import 'package:tawasul/widget/GraphWidget/GraphLogic.dart';
 import 'package:tawasul/widget/GraphWidget/plot.dart';
 import 'package:tawasul/widget/enddrawer.dart';
 import 'package:tawasul/widget/GraphWidget/Graph.dart';
@@ -18,8 +20,19 @@ class Emograph extends StatefulWidget{
 
 class _Home extends State<Emograph>{
 
+  final dbHelper = DatabaseHelper();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final emotions = {"Happy": 0.8,"Sad": 0.2,"Angry": 0.5,"Fear": 0.3,"Surprise": 0.7};
+  final emotions = {"Happy": 5.0,"Sad": 1.25,"Angry": 3.125,"Fear": 1.875,"Surprise": 4.375,"Love":4.5};
+  Map<String, List<String>> Emotionsmap = {};
+  Map<String, double> dailyScores = {};
+  List<String> days = [];
+
+
+  @override
+  void initState() {
+    super.initState();
+    fetchGroupedEmotions();
+  }
 
 
 
@@ -37,25 +50,36 @@ class _Home extends State<Emograph>{
     Column Texts = Column(children: [title,subtitle],crossAxisAlignment: CrossAxisAlignment.start,);
 
     //! ==================================================================== plots =============================================
-    List<FlSpot> data =  [FlSpot(-0.9, 0),FlSpot(0, 5),FlSpot(2, 2),FlSpot(4, 5),FlSpot(6, 3.1),FlSpot(8, 4),FlSpot(10, 3),FlSpot(11, 4)];
+    List<FlSpot> data =  [
+      FlSpot(-0.9, 0),
+      FlSpot(0, (days.isNotEmpty ? dailyScores[days[5]] ?? 0.0 : 0.0)),
+      FlSpot(2, (days.isNotEmpty ? dailyScores[days[4]] ?? 0.0 : 0.0)),
+      FlSpot(4, (days.isNotEmpty ? dailyScores[days[3]] ?? 0.0 : 0.0)),
+      FlSpot(6, (days.isNotEmpty ? dailyScores[days[2]] ?? 0.0 : 0.0)),
+      FlSpot(8, (days.isNotEmpty ? dailyScores[days[1]] ?? 0.0 : 0.0)),
+      FlSpot(10,(days.isNotEmpty ? dailyScores[days[0]] ?? 0.0 : 0.0)),
+      FlSpot(11, 0)
+    ];
+
     LineChartBarData plot1 = Plot.PlotShape(data: data, iscurved: true, ShowDots: false);
     LineChartGraph graph =  LineChartGraph(plots: [plot1]);
 
+    Map<String, double> sortedscores = Graphlogic.getSortedEmotionPercentages(Graphlogic.getOverallEmotionPercentages(Emotionsmap,emotions));
     //! ==================================================================== Plot Continaer =============================================
     BoxDecoration graphContainerDecor = BoxDecoration(color: cons.Container_fillColor,borderRadius: BorderRadius.circular(15));
-    Column graphcontrols = Column(children: [Texts,graph,Divider(color: cons.Container_borderColor,thickness: 3,),EmotionBreakdown()],crossAxisAlignment: CrossAxisAlignment.start,spacing: 10,);
+    EmotionBreakdown stats = EmotionBreakdown(scores: sortedscores);
+    Column graphcontrols = Column(children: [Texts,graph,Divider(color: cons.Container_borderColor,thickness: 3,),stats],crossAxisAlignment: CrossAxisAlignment.start,spacing: 10,);
     Container graphContainer = Container(child: graphcontrols,width: cons.screen_width,padding: EdgeInsets.all(10),decoration: graphContainerDecor,);
 
     //! ==================================================================== Key insights =============================================
     Text snapshot = Text("Key Insights",style: TextStyle(color:Colors.white,fontSize: 20,fontFamily: "inter",fontWeight: FontWeight.w600));
 
-    EmotionSnapshot emo1 = EmotionSnapshot(TitleText: "Happy",SubtitleText: "Most Frequesnt",IconName: Icons.sentiment_satisfied_alt,IconColor: Colors.green,);
-    EmotionSnapshot emo2 = EmotionSnapshot(TitleText: "Sad",SubtitleText: "Middle Frequesnt",IconName: Icons.sentiment_dissatisfied_outlined,IconColor: Colors.amber,);
-    EmotionSnapshot emo3 = EmotionSnapshot(TitleText: "Anger",SubtitleText: "Least Frequesnt",IconName: Icons.sentiment_very_dissatisfied,IconColor: Colors.red,);
-
+    EmotionSnapshot emo1 = EmotionSnapshot(TitleText:sortedscores[sortedscores.keys.toList()[0]] == 0.0? "Un Known": sortedscores.keys.toList()[0],SubtitleText: "Most Frequesnt",IconName: Icons.arrow_upward,IconColor: Colors.green,);
+    EmotionSnapshot emo2 = EmotionSnapshot(TitleText: sortedscores[sortedscores.keys.toList()[1]] == 0.0? "Un Known": sortedscores.keys.toList()[1],SubtitleText: "Middle Frequesnt",IconName: Icons.horizontal_rule,IconColor: Colors.amber,);
+    EmotionSnapshot emo3 = EmotionSnapshot(TitleText: sortedscores[sortedscores.keys.toList()[3]] == 0.0? "Un Known": sortedscores.keys.toList()[3],SubtitleText: "Least Frequesnt",IconName: Icons.arrow_downward,IconColor: Colors.red,);
 
     Row snaphots = Row(children: [emo1 ,emo2,emo3],spacing: 10,);
-    SingleChildScrollView scrollSnapshot = SingleChildScrollView(child: snaphots,scrollDirection: Axis.horizontal,);
+    SingleChildScrollView scrollSnapshot = SingleChildScrollView(child: snaphots,scrollDirection: Axis.horizontal);
     //! ==================================================================== Controls ===================================================
     Column controls = Column(children: [graphContainer,snapshot,SizedBox(child: scrollSnapshot,width: cons.screen_width)],crossAxisAlignment: CrossAxisAlignment.start,spacing: 25,);
     Container main_app = Container(child: SingleChildScrollView(child: controls),padding: EdgeInsets.only(left: 5,right: 5));
@@ -63,7 +87,26 @@ class _Home extends State<Emograph>{
 
   }
 
- 
+
+  void fetchGroupedEmotions() async {
+    List<String> dates = Graphlogic.getLastFiveDays();
+    Map<String, List<String>> emotionsByDate = await DatabaseHelper().getEmotionsGroupedByDate(dates);
+    
+    setState(() {
+      Emotionsmap = emotionsByDate;
+      dailyScores = Graphlogic.calculateDailyScores(emotionsByDate, emotions) ;
+      days = dates;
+    });
+    
+
+    print(Emotionsmap);
+    print(dailyScores);
+    print(days);
+
+  }
+
+
+  
 
 
   
