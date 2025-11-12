@@ -63,8 +63,8 @@ class NoteContent extends StatelessWidget {
   Widget PredictedClass({required BuildContext context,required String Class_text}){
     Constants cons = Constants(context: context);
 
-    Text title = Text("Note Title: ${content["title"]}",style: TextStyle(color: Colors.white,fontSize: 30,fontWeight: FontWeight.bold,fontFamily: "Inter_ExtraBold"),);
-    Row title_row = Row(children: [title,],spacing: 5);
+    Text title = Text("Note Title: ${content["title"]}",softWrap: true,style: TextStyle(color: Colors.white,fontSize: 24,fontWeight: FontWeight.bold,fontFamily: "Inter_ExtraBold"),);
+    Column title_row = Column(children: [title,],spacing: 5);
 
 
     Text Primaery =  Text("Primary Emotion:",style:TextStyle(color: Colors.white,fontWeight: FontWeight.bold));
@@ -72,8 +72,14 @@ class NoteContent extends StatelessWidget {
 
     Text Desc = Text("${content["content"]}",style: TextStyle(color: Colors.white54,fontWeight: FontWeight.w500,fontSize: 16),maxLines: null,overflow:TextOverflow.visible,softWrap: true,textWidthBasis: TextWidthBasis.parent,textAlign: TextAlign.left);
     Row Desc_Row  = Row(children: [Expanded(child: Desc)],mainAxisAlignment: MainAxisAlignment.start,);
+
+
+    Text advice_label = Text("\nOur Advice:",style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),);
+    Text advice_Text = Text("${content["advice"]}",textAlign: TextAlign.start,softWrap: true,maxLines: 3,style:TextStyle(color: Colors.grey.shade600,fontWeight: FontWeight.w500,fontSize: 15),);
+    Column Advice_Column = Column(children: [advice_label,advice_Text],crossAxisAlignment: CrossAxisAlignment.start);
+
     
-    Column Class_Column = Column(children: [title_row,class_row,Desc_Row],spacing: 5);
+    Column Class_Column = Column(children: [title_row,class_row,Desc_Row,Advice_Column],spacing: 5,crossAxisAlignment: CrossAxisAlignment.start,);
     return  Container(child: Class_Column,padding: EdgeInsets.all(10),decoration: cons.Container_decor,width: cons.screen_width,);
 
   }

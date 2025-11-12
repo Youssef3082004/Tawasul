@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tawasul/database.dart';
 import 'package:tawasul/provider/ThoughtsProvider.dart';
 import 'package:tawasul/screens/Thoughts.dart';
 import 'package:tawasul/screens/camera.dart';
@@ -10,15 +11,14 @@ import 'package:tawasul/screens/help.dart';
 import 'package:tawasul/screens/onboard/welcome.dart';
 import 'package:tawasul/screens/onboard/onboarding.dart';
 import 'package:tawasul/provider/theme.dart';
-// import 'database.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
 
-
-
-
+const apiKey = 'AIzaSyDiZVuBtz08mZQx7hMWjEkARCTKTFAAd8Y';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await DatabaseHelper().resetDatabase(); // delete old DB
+  WidgetsFlutterBinding.ensureInitialized();
+  await DatabaseHelper().resetDatabase(); // delete old DB
+  Gemini.init(apiKey: apiKey, enableDebugging: true);
   runApp(MultiProvider(providers: [ChangeNotifierProvider(create: (context) => Thoughtsprovider())],child: MyApp()));
 }
 

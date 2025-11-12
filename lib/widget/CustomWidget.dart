@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tawasul/constants.dart';
 
 
 class Customwidgets {
@@ -58,6 +59,24 @@ class Identity  extends StatelessWidget{
     Column IdentityColumn =  Column(children: [image_container,Appliation_name],spacing: 0,crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center,);
     return IdentityColumn;
   }
+}
+
+
+
+class LoadedCircle extends StatelessWidget{
+
+  final String TextUnderLoad;
+  const LoadedCircle({super.key , required this.TextUnderLoad});
+
+  @override
+  Widget build(BuildContext context) {
+    Constants cons = Constants(context: context);
+
+    Text title = Text(TextUnderLoad,style: TextStyle(fontWeight: FontWeight.w500,fontSize: 15,color: Colors.white70));
+    return Column(children: [CircularProgressIndicator(color: cons.SecondColor,), title],mainAxisAlignment: MainAxisAlignment.center,crossAxisAlignment: CrossAxisAlignment.center,spacing: 10,);
+
+  }
+
 }
 
 
