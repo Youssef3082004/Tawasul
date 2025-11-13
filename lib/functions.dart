@@ -1,5 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class PublicFunction{
 
@@ -33,6 +36,24 @@ class PublicFunction{
       return false;
     }
   }
+
+
+
+static Future<void> saveUserState({required String Value}) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setString('Loggedin', Value);
+}
+
+static Future<String> loadUserState() async {
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('Loggedin') ?? "No";
+  } catch (e) {
+    return "No";
+  }
+}
+
 
 
 

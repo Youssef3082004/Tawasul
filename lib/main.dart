@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tawasul/database.dart';
+import 'package:tawasul/functions.dart';
 import 'package:tawasul/provider/ThoughtsProvider.dart';
 import 'package:tawasul/screens/Thoughts.dart';
 import 'package:tawasul/screens/camera.dart';
@@ -16,14 +16,18 @@ import 'package:flutter_gemini/flutter_gemini.dart';
 const apiKey = 'AIzaSyDiZVuBtz08mZQx7hMWjEkARCTKTFAAd8Y';
 
 void main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await DatabaseHelper().resetDatabase(); // delete old DB
   WidgetsFlutterBinding.ensureInitialized();
-  await DatabaseHelper().resetDatabase(); // delete old DB
   Gemini.init(apiKey: apiKey, enableDebugging: true);
-  runApp(MultiProvider(providers: [ChangeNotifierProvider(create: (context) => Thoughtsprovider())],child: MyApp()));
+  final loginornot = await PublicFunction.loadUserState();
+
+  runApp(MultiProvider(providers: [ChangeNotifierProvider(create: (context) => Thoughtsprovider())],child: MyApp(loginornot: loginornot,)));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String loginornot;
+  const MyApp({super.key,required this.loginornot});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +47,7 @@ class MyApp extends StatelessWidget {
 
     
     return MaterialApp(debugShowCheckedModeBanner: false,
-    initialRoute: "/",
+    initialRoute:loginornot == "Yes"? "/notes" :"/",
       title: "Tawasul",routes:routes,
       theme: lightmode,
       

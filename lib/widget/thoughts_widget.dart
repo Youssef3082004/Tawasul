@@ -185,7 +185,7 @@ class _Home extends State<HomeWidget>{
 
 
     Text advice_label = Text("Advice For You",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold,fontFamily: "Inter_ExtraBold"),);
-    Text advice_Text = Text(widget.Advice?? "",textAlign: TextAlign.start,softWrap: true,maxLines: 3,style:TextStyle(color: Colors.grey.shade600,fontWeight: FontWeight.w500,fontSize: 15),);
+    Text advice_Text = Text(widget.Advice?? "",textAlign: TextAlign.start,softWrap: true,maxLines: null,style:TextStyle(color: Colors.grey.shade600,fontWeight: FontWeight.w500,fontSize: 15),);
     Column Advice_Column = Column(children: [advice_label,advice_Text],crossAxisAlignment: CrossAxisAlignment.start);
 
 

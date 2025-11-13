@@ -75,7 +75,7 @@ class NoteContent extends StatelessWidget {
 
 
     Text advice_label = Text("\nOur Advice:",style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),);
-    Text advice_Text = Text("${content["advice"]}",textAlign: TextAlign.start,softWrap: true,maxLines: 3,style:TextStyle(color: Colors.grey.shade600,fontWeight: FontWeight.w500,fontSize: 15),);
+    Text advice_Text = Text("${content["advice"]}",textAlign: TextAlign.start,softWrap: true,maxLines: null,style:TextStyle(color: Colors.grey.shade600,fontWeight: FontWeight.w500,fontSize: 15),);
     Column Advice_Column = Column(children: [advice_label,advice_Text],crossAxisAlignment: CrossAxisAlignment.start);
 
     

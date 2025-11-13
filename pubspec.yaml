@@ -46,6 +46,7 @@ dependencies:
   intl: ^0.20.2
   flutter_gemini: ^3.0.0
   http: ^1.6.0
+  shared_preferences: ^2.5.3
 
 flutter_native_splash:
   color: "#ffffff" 

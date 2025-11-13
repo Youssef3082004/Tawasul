@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tawasul/constants.dart';
+import 'package:tawasul/functions.dart';
 
 class Onboarding_screen extends StatelessWidget {
   final  String Title;
@@ -25,7 +26,7 @@ class Onboarding_screen extends StatelessWidget {
     Text subTitle_text = Text(Subtitle,textAlign: TextAlign.center,style: TextStyle(color:Colors.white,fontSize: 10,fontFamily: "Inter"),);
     Column Text_column = Column(children: [Title_text,subTitle_text],spacing: 5,);
 
-    FilledButton Start_button = FilledButton(onPressed: ()=> Navigator.pushNamedAndRemoveUntil(context, "/notes", (route) => false), child: Text("Continue",style: TextStyle(fontWeight: FontWeight.w900),),style: cons.Button_style);
+    FilledButton Start_button = FilledButton(onPressed: ()=>  startButtonFunc(context) , child: Text("Continue",style: TextStyle(fontWeight: FontWeight.w900),),style: cons.Button_style);
 
 
 
@@ -33,4 +34,16 @@ class Onboarding_screen extends StatelessWidget {
     Container main_App = Container(color:cons.main_color,child: Controls,width: cons.screen_width,padding: EdgeInsets.only(top: 70),);
     return Scaffold(body: Center(child: main_App));
   }
+
+
+  void startButtonFunc(BuildContext context) async {
+  try {
+    await PublicFunction.saveUserState(Value: "Yes"); 
+  } catch (e) {
+    debugPrint("Error saving user state: $e");
+  }
+  Navigator.pushNamedAndRemoveUntil(context, "/notes", (route) => false);
+}
+
+
 }
