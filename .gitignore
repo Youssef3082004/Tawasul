@@ -46,3 +46,5 @@ app.*.map.json
 /android
 /ios
 pubspec.lock
+emotions-classification-lstm-nlp-94.ipynb
+text_classification_rnn.ipynb
