@@ -53,7 +53,7 @@ class _Home extends State<Note>{
 
     
     //! ==================================================================== Appbar =============================================    
-    PopupMenuButton h =  PopupMenuButton(icon: Icon(Icons.more_vert, color: Colors.white),color: cons.main_color.withValues(alpha: 0.9),onSelected: (value)=> PopupMenuButtonfunction(value),borderRadius: BorderRadius.circular(20),
+    PopupMenuButton h =  PopupMenuButton(icon: Icon(Icons.more_vert, color: Colors.white),color: cons.main_color.withValues(alpha: 0.9),onSelected: (value)=>notes.isEmpty? null: PopupMenuButtonfunction(value),borderRadius: BorderRadius.circular(20),
     itemBuilder: (context) =>[PopupMenuItem(value: 1,child: Row(children: [Icon(Icons.delete, color: Colors.white),Text("Clear Notes",style: TextStyle(color: Colors.white)),],spacing: 10,),)]);
 
     AppBar page_appbar = AppBar(title: Text("Notes"),leading: IconButton(icon: Icon(Icons.menu,color: Colors.white,),onPressed: () => _scaffoldKey.currentState!.openDrawer()),actions: [h],scrolledUnderElevation: 0);
@@ -63,14 +63,14 @@ class _Home extends State<Note>{
 
     //! ==================================================================== Statisticss class Widget =============================================
     Iterable<NoteWidget> Notes = notes.map((Map Element) => NotesBuilder(Element));
-    Column Notes_Column = Column(children: [...Notes],spacing: 10);
+    Column Notes_Column = Column(children: [...Notes],spacing: 10,verticalDirection: VerticalDirection.up,);
     FloatingActionButton Add_button = FloatingActionButton(onPressed: ()=> Navigator.pushNamedAndRemoveUntil(context, "/thoughts", (route) => false),child: Icon(Icons.add,color: Colors.white),backgroundColor: Color(0xff157fec),);
     //! ==================================================================== Controls ===================================================
-    Padding Identit = Padding(padding: EdgeInsets.only(top: cons.screen_height/3.8),child: Identity(),);
-    Opacity NotClearIdentity = Opacity(opacity: 0.6,child: Identit,);
+    Padding IdentityWidget = Padding(padding: EdgeInsets.only(top: cons.screen_height/5.0),child: Identity(ImagePath: "assets/images/Notes.gif",Description: "All your notes, neatly organized with easy emotion filtering.",),);
+
     //! ==================================================================== Controls ===================================================
 
-    Column controls = Column(children: [SizedBox(child: chipList,height: 50),Notes.isEmpty? NotClearIdentity:Notes_Column],mainAxisAlignment: MainAxisAlignment.center,spacing: 20,);
+    Column controls = Column(children: [SizedBox(child: chipList,height: 50),Notes.isEmpty? IdentityWidget:Notes_Column],mainAxisAlignment: MainAxisAlignment.center,spacing: 20,);
     Container main_app = Container(child: SingleChildScrollView(child: controls,scrollDirection: Axis.vertical,),padding: EdgeInsets.only(left: 5,right: 5),height: cons.screen_height,);
     return Scaffold(key: _scaffoldKey,body: main_app,appBar: page_appbar,backgroundColor: cons.main_color,drawer: AppDrawer(),floatingActionButton: Add_button,);
 
@@ -127,15 +127,29 @@ class _Home extends State<Note>{
 
   NoteWidget NotesBuilder(Map Element){
     if (Element["contentState"] == "Happy"){
-      return NoteWidget(Iconcolor:Colors.amber,leadingicon: Icons.sentiment_satisfied_alt,NoteData: Element,);
+      return NoteWidget(Iconcolor:Colors.yellow,leadingicon: Icons.sentiment_very_satisfied_outlined,NoteData: Element,);
     }
     else if (Element["contentState"] == "Love"){
       return NoteWidget(Iconcolor:Colors.redAccent,leadingicon: Icons.favorite,NoteData: Element);
     }
+
+    else if (Element["contentState"] == "Anger"){
+      return NoteWidget(Iconcolor:Colors.red,leadingicon: Icons.sentiment_very_dissatisfied,NoteData: Element);
+    }
+
+    else if (Element["contentState"] == "Sadness"){
+      return NoteWidget(Iconcolor:Colors.lightBlue,leadingicon: Icons.sentiment_dissatisfied,NoteData: Element);
+    }
+
     else if (Element["contentState"] == "Surprise"){
       return NoteWidget(Iconcolor:Colors.orange,leadingicon: Icons.emoji_objects,NoteData: Element);
     }
 
+    else if (Element["contentState"] == "Fear"){
+      return NoteWidget(Iconcolor:Colors.purple,leadingicon: Icons.sentiment_neutral,NoteData: Element);
+    }
+
+    
     return NoteWidget(Iconcolor:Colors.amber,leadingicon: Icons.work,NoteData: Element);
 
   }
@@ -149,14 +163,25 @@ class _Home extends State<Note>{
 
 
 
-  Future<void> DeleteNotes() async {
+  Future<void> _DeleteNotes() async {
     await dbHelper.deleteNotes();
     setState(() => notes = []);
   }
 
 
-  void PopupMenuButtonfunction( int value) async{
-    if (value == 1) {await DeleteNotes();} 
+  void PopupMenuButtonfunction(int value) async{
+    if (value == 1) {
+      if(!mounted) return;
+      Customwidgets.ShowAsesomeDialog(context: context, title: "Erase Everything?", message: "Everything in your notes will be lost. Do you wish to continue?", 
+          Function: () async  {
+            await _DeleteNotes();
+            if(!mounted) return;
+            Customwidgets.ShowAwesomeSnackbar(context: context, title: "Clear All Notes", message: "All notes have been successfully removed!");
+          } 
+        );
+
+    } 
+   
   }
 
                       

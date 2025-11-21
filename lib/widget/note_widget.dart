@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tawasul/constants.dart';
+import 'package:tawasul/database.dart';
+import 'package:tawasul/functions.dart';
 import 'package:tawasul/widget/CustomWidget.dart';
 
 // {id: 9, title: gggggg, content: ggggggggggg, date: 2025-11-05, time: 04:00 PM, contentState: happy}
@@ -19,7 +21,7 @@ class NoteWidget extends StatelessWidget {
     
     Icon Leading_icon = Icon(leadingicon,color: Iconcolor,size: 30,);
     Text title = Text(NoteData["title"],style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w500,overflow: TextOverflow.ellipsis));
-    Text sub_Title = Text(NoteData["date"],style: TextStyle(color: Colors.grey),);
+    Text sub_Title = Text("${PublicFunction.formatNoteDate(NoteData["date"])} / ${NoteData["time"]}",style: TextStyle(color: Colors.white54),);
     Icon trailing_icon = Icon(Icons.arrow_forward_ios,color: Colors.white,);
     OutlineInputBorder shape = OutlineInputBorder(borderRadius: BorderRadius.circular(15),borderSide: BorderSide(width: 2,color: cons.Container_borderColor));
 
@@ -27,6 +29,7 @@ class NoteWidget extends StatelessWidget {
     return InkWell(child: NotelistTile,onTap:() => Navigator.push(context, MaterialPageRoute(builder: (context) => NoteContent(content: NoteData,IconColor: Iconcolor))),);
   }
 
+  
 
 }
 
@@ -45,11 +48,12 @@ class NoteContent extends StatelessWidget {
     Constants cons = Constants(context: context);
 
     //! ==================================================================== Appbar =============================================
-    AppBar NoteContentAppbar = AppBar(title: Text("Note"),leading: IconButton(icon: Icon(Icons.arrow_back,color: Colors.white,),onPressed: () => Navigator.pop(context)),scrolledUnderElevation: 0);
+    IconButton DeleteNote = IconButton(onPressed: ()=> Customwidgets.ShowAsesomeDialog(context: context, title: "Confirm Deletion", message: "Do you really want to delete this note?",Function: () => DeleteNoteFunc(context: context, Id: content["id"])), icon: Icon(Icons.delete,color: Colors.white,));
+    AppBar NoteContentAppbar = AppBar(title: Text("Note"),leading: IconButton(icon: Icon(Icons.arrow_back,color: Colors.white,),onPressed: () => Navigator.pop(context)),scrolledUnderElevation: 0,actions: [DeleteNote],);
     
     //! ==================================================================== Title & Time =============================================
     Text title = Text("My Thought in Day",style: TextStyle(color: Colors.white,fontSize: 30,fontWeight: FontWeight.bold,fontFamily: "Inter_ExtraBold"),);
-    Text subtitle = Text("${content["date"]} / ${content["time"]}",textAlign: TextAlign.start,style:TextStyle(color: Colors.grey.shade600,fontWeight: FontWeight.w500,fontSize: 15),);
+    Text subtitle = Text("${PublicFunction.formatNoteDate(content["date"])} / ${content["time"]}",textAlign: TextAlign.start,style:TextStyle(color: Colors.grey.shade600,fontWeight: FontWeight.w500,fontSize: 15),);
     Column Texts = Column(children: [title,subtitle],crossAxisAlignment: CrossAxisAlignment.start);
     Row ggg = Row(children: [Texts],mainAxisAlignment: MainAxisAlignment.start,);
 
@@ -75,13 +79,22 @@ class NoteContent extends StatelessWidget {
 
 
     Text advice_label = Text("\nOur Advice:",style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),);
-    Text advice_Text = Text("${content["advice"]}",textAlign: TextAlign.start,softWrap: true,maxLines: null,style:TextStyle(color: Colors.grey.shade600,fontWeight: FontWeight.w500,fontSize: 15),);
+    Text advice_Text = Text("${content["advice"]}",textAlign: TextAlign.start,softWrap: true,maxLines: null,style:TextStyle(color: Colors.white54,fontWeight: FontWeight.w500,fontSize: 15),);
     Column Advice_Column = Column(children: [advice_label,advice_Text],crossAxisAlignment: CrossAxisAlignment.start);
 
     
     Column Class_Column = Column(children: [title_row,class_row,Desc_Row,Advice_Column],spacing: 5,crossAxisAlignment: CrossAxisAlignment.start,);
     return  Container(child: Class_Column,padding: EdgeInsets.all(10),decoration: cons.Container_decor,width: cons.screen_width,);
 
+  }
+
+
+
+  void DeleteNoteFunc({required BuildContext context,required int Id}) async{
+    final dbHelper = DatabaseHelper();
+    await dbHelper.deleteNote(Id);
+    Navigator.pushReplacementNamed(context, "/notes");
+    Customwidgets.ShowAwesomeSnackbar(context: context,title: "Note Removed!",message: "Oops! Deleted from your notes",isError: true);
   }
 
 

@@ -46,14 +46,13 @@ class _Home extends State<Camera>{
     Center UploadedImage = Center(child: fileimage == null? SizedBox.shrink() : ChoosedImage(fileimage: fileimage));
 
     //! ==================================================================== Controls ===================================================
-    Padding Identit = Padding(padding: EdgeInsets.only(top: 40),child: Identity(),);
-    Opacity NotClearIdentity = Opacity(opacity: 0.6,child: Identit,);
+    Padding IdentityWidget = Padding(padding: EdgeInsets.only(top: 40),child: Identity(ImagePath: "assets/images/Image upload.gif",Description: "Upload a photo and instantly get an emotion label based on its visual mood.",),);
 
     //! ==================================================================== Analyze Button =============================================
     FilledButton analyze_button = FilledButton(onPressed: Analyzed? () => setState(()=> showstat = true):null, child: Text("Analyze",style: TextStyle(fontWeight: FontWeight.w700),),style: cons.Button_style);
 
     //! ==================================================================== Controls ===================================================
-    Column controls = Column(children: [camera_Button,UploadedImage,SizedBox(child: analyze_button, width: cons.screen_width - 30,),showstat? class_Stats:NotClearIdentity],mainAxisAlignment: MainAxisAlignment.start,spacing: 20,);
+    Column controls = Column(children: [camera_Button,UploadedImage,SizedBox(child: analyze_button, width: cons.screen_width - 30,),showstat? class_Stats:IdentityWidget],mainAxisAlignment: MainAxisAlignment.start,spacing: 20,);
     Container main_app = Container(child: SingleChildScrollView(child: controls),padding: EdgeInsets.only(left: 5,right: 5));
     return Scaffold(key: _scaffoldKey,body: main_app,appBar: page_appbar,backgroundColor: cons.main_color,drawer: AppDrawer());
 

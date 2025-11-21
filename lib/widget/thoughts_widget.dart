@@ -49,12 +49,12 @@ class _ThoughtsTextfeild extends State<ThoughtsTextfeild>{
 
     Consumer title_text = Consumer<Thoughtsprovider>(
       builder: (context, provider, child) {
-    return Form(key: titlestate,
-      child: TextFormField(controller: titleController,validator: (value) => contentTitle(value),onChanged: (value) => Provider.of<Thoughtsprovider>(context,listen: false).ToggleEmptyTitle(value.length >= 3),autovalidateMode: AutovalidateMode.onUserInteraction,cursorColor: Colors.white54,style: const TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold),
-      decoration: InputDecoration(fillColor: cons.Container_fillColor,hintText: "Title",hintStyle: TextStyle(color: Colors.white54),enabledBorder:UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),focusedBorder:UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)) ),),
+            return Form(key: titlestate,
+              child: TextFormField(controller: titleController,validator: (value) => contentTitle(value),onChanged: (value) => Provider.of<Thoughtsprovider>(context,listen: false).ToggleEmptyTitle(value.length >= 3),autovalidateMode: AutovalidateMode.onUserInteraction,cursorColor: Colors.white54,style: const TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold),
+              decoration: InputDecoration(fillColor: cons.Container_fillColor,hintText: "Title",hintStyle: TextStyle(color: Colors.white54),enabledBorder:UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),focusedBorder:UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)) ),),
+            );
+          },
     );
-  },
-);
 
 
     Consumer content_text = Consumer<Thoughtsprovider>(
@@ -62,30 +62,29 @@ class _ThoughtsTextfeild extends State<ThoughtsTextfeild>{
     return Form(key:textstate,
     child: TextFormField(controller: contentController,validator: (value) => contentText(value!),
     onChanged: (value) {
-      Provider.of<Thoughtsprovider>(context,listen: false).ToggleEmptyText(value.length >= 12);
-      Provider.of<Thoughtsprovider>(context,listen: false).UpdateNote(value); 
-      },
-      autovalidateMode: AutovalidateMode.onUserInteraction,cursorColor: Colors.white54,keyboardType: TextInputType.multiline,maxLines: 10,style: TextStyle(color: Colors.white),
-      decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder:InputBorder.none ,hintText: "Tell me what in your mind ...",hintStyle: TextStyle(color: Colors.white54,fontSize: 18),fillColor: cons.Container_fillColor)),
-    );
-  },
-);
-
-
+              Provider.of<Thoughtsprovider>(context,listen: false).ToggleEmptyText(value.length >= 12);
+              Provider.of<Thoughtsprovider>(context,listen: false).UpdateNote(value); 
+              },
+              autovalidateMode: AutovalidateMode.onUserInteraction,cursorColor: Colors.white54,keyboardType: TextInputType.multiline,maxLines: 10,style: TextStyle(color: Colors.white),
+              decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder:InputBorder.none ,hintText: "Tell me what in your mind ...",hintStyle: TextStyle(color: Colors.white54,fontSize: 18),fillColor: cons.Container_fillColor)),
+            );
+          },
+      );
 
     //! ============================================================================ Toggle Button ===========================================================
     Icon save_icon = Icon(Toggle[0]? Icons.bookmark  : Icons.bookmark_outline,size: 30);
     ToggleButtons Buttons = ToggleButtons(children: [save_icon], isSelected: Toggle,onPressed:Analyzed && FilledTitle && FilledText ? (int index) => changeToggle(index): null,color: Colors.white,selectedColor: Colors.white,fillColor: Colors.transparent,splashColor: Colors.transparent,disabledColor: Colors.grey);
     
+    //! ============================================================================ Toggle Button ===========================================================
+    IconButton ClearButton = IconButton(onPressed: Analyzed && FilledTitle && FilledText?  ()=> Clearinterface():null, icon: Icon(Icons.cancel,size: 30),disabledColor: Colors.grey,color: Colors.white);
+
     //! ============================================================================ Controls ===========================================================
-    Column Note_Container_Controls = Column(children: [title_text,content_text,Row(children: [Buttons])],spacing: 0);
+    Column Note_Container_Controls = Column(children: [title_text,content_text,Row(children: [Buttons,ClearButton],mainAxisAlignment: MainAxisAlignment.spaceBetween,)],spacing: 0);
     
     BoxDecoration widget_decor = BoxDecoration(border: Border.all(color: cons.Container_borderColor,width: 3),color: cons.Container_fillColor,borderRadius: BorderRadius.circular(12));
     return Container(child: Note_Container_Controls,decoration: widget_decor,padding: const EdgeInsets.all(5),);
 
   }
-
-
 
 
 
@@ -111,17 +110,44 @@ class _ThoughtsTextfeild extends State<ThoughtsTextfeild>{
     if (Toggle[index] == true && titleController.text.isNotEmpty) {
       await addNote();
       if (!mounted) return;
-      Customwidgets.showCustomSnackBar(context: context,message: "Note saved successfully",isError: false);
+      Customwidgets.ShowAwesomeSnackbar(context: context,title: "Note Saved!",message: "Your note has been successfully saved",isError: false);
     } 
     else {
 
       final lastNoteId = await dbHelper.getLastNoteId();
       await dbHelper.deleteNote(lastNoteId);
       if (!mounted) return;
-      Customwidgets.showCustomSnackBar(context: context,message: "Note removed from your list",isError: true);
+      Customwidgets.ShowAwesomeSnackbar(context: context,title: "Note Removed!",message: "Oops! Deleted from your notes",isError: true);
     }
+
+  
+  
+
+
   }
 
+  void Clearinterface() {
+  
+  titlestate.currentState?.reset();
+  textstate.currentState?.reset();
+
+  titleController.clear();
+  contentController.clear();
+
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    titlestate.currentState?.reset();
+    textstate.currentState?.reset();
+
+  });
+
+  Provider.of<Thoughtsprovider>(context, listen: false).ToggleAnalyzed(false);
+  Provider.of<Thoughtsprovider>(context, listen: false).ToggleEmptyTitle(false);
+  Provider.of<Thoughtsprovider>(context, listen: false).ToggleEmptyText(false);
+  
+  setState(() => Toggle[0] = false);
+
+ 
+}
 
   Future<void> addNote() async {
     DateTime now = DateTime.now();

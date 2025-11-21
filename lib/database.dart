@@ -80,7 +80,7 @@ class DatabaseHelper {
 
 
   Future<int> getLastNoteId() async {
-    final db = await database; // Make sure this opens your DB instance
+    final db = await database; 
     final List<Map<String, dynamic>> result = await db.rawQuery(
       'SELECT id FROM notes ORDER BY id DESC LIMIT 1',
     );

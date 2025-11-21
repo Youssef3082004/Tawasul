@@ -5,7 +5,7 @@ import "package:flutter/material.dart";
 
 ThemeData lightmode = ThemeData(
   brightness: Brightness.light,
-  appBarTheme: AppBarTheme(backgroundColor: Color(0xff151c22),centerTitle: true,titleTextStyle: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.w300,fontFamily: "Inter_ExtraBold"),),
+  appBarTheme: AppBarTheme(backgroundColor: Color(0xff101922),centerTitle: true,titleTextStyle: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.w300,fontFamily: "Inter_ExtraBold"),),
 
   inputDecorationTheme:InputDecorationTheme(filled: true,fillColor: Color(0xff27272a),
   focusedBorder: OutlineInputBorder(borderSide: BorderSide(width: 3,color: Color(0xff7d7b7d)),borderRadius: BorderRadius.circular(15)),

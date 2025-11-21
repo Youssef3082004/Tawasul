@@ -22,7 +22,7 @@ class _Home extends State<Emograph>{
 
   final dbHelper = DatabaseHelper();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final emotions = {"Happy": 5.0,"Sad": 1.25,"Angry": 3.125,"Fear": 1.875,"Surprise": 4.375,"Love":4.5};
+  final emotions = {"Love": 5.0,"Happy": 4.5,"Surprise": 3.0,"Sadness": 2.0,"Fear": 1.5,"Anger": 1.0};
   Map<String, List<String>> Emotionsmap = {};
   Map<String, double> dailyScores = {};
   List<String> days = [];

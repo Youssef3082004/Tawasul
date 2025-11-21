@@ -12,7 +12,7 @@ class AppDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
 
     Constants cons = Constants(context: context);
-    DrawerHeader drawerHeader = DrawerHeader(decoration: BoxDecoration(color: cons.main_color),child: Identity());
+    DrawerHeader drawerHeader = DrawerHeader(decoration: BoxDecoration(color: cons.main_color),child: Identity(ImagePath: "assets/images/logo.png",Description: "Tawasul",));
 
     List<Widget> pages = [drawerHeader,
       Card(child: page_listtile(context: context, icon: Icons.description, page_name: "Notes",desc: "Save Your Ideas here", route_name: "/notes"),color: cons.main_color,shadowColor:cons.Container_fillColor ,),
@@ -26,8 +26,8 @@ class AppDrawer extends StatelessWidget {
 
     ];
 
-    ListView Elements = ListView(children: pages,padding: EdgeInsets.zero,); 
-    return Drawer(child: Elements,backgroundColor: cons.main_color,);
+    ListView Elements = ListView(children: pages,padding: EdgeInsets.zero); 
+    return Drawer(child: Elements,backgroundColor: cons.main_color);
   }
 
 
@@ -40,12 +40,18 @@ class AppDrawer extends StatelessWidget {
 
 
    return ListTile(leading:Leading_icon ,trailing: trailing_icon,title:title ,subtitle: subtitle,
-            onTap: () async{
+            onTap: () {
 
               if (page_name == "Logout" && route_name == "/"){
-                Navigator.pop(context);
-                Navigator.pushReplacementNamed(context, route_name);
-                await PublicFunction.saveUserState(Value: "No");
+                
+                Customwidgets.ShowAsesomeDialog(context: context, title: "Time to Say Goodbye?", message: "Take a break! Come back anytime to continue your journey.", 
+                Function: () async {
+                  Navigator.pop(context);
+                  Navigator.pushReplacementNamed(context, route_name);
+                  await PublicFunction.saveUserState(Value: "No");
+                });
+
+                
               }
 
               else if (ModalRoute.of(context)?.settings.name != route_name){
