@@ -47,9 +47,11 @@ dependencies:
   flutter_gemini: ^3.0.0
   http: ^1.6.0
   shared_preferences: ^2.5.3
+  awesome_snackbar_content: ^0.1.8
+  awesome_dialog: ^3.3.0
 
 flutter_native_splash:
-  color: "#ffffff" 
+  color: "#151c22" 
   image: assets/images/icon2.png 
   android: true
   ios: true
@@ -114,6 +116,10 @@ flutter:
     - family: Inter_ExtraBold
       fonts:
         - asset: assets/fonts/Inter_ExtraBold.ttf
+    
+    - family: Alex
+      fonts:
+        - asset: assets/fonts/Alexandria.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
