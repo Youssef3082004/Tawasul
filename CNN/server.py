@@ -1,22 +1,18 @@
 import os
-os.environ["TF_USE_LEGACY_KERAS"] = "1"
-os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
+os.environ["TF_USE_LEGACY_KERAS"] = "1"  
+from tf_keras.models import load_model
 import cv2
 import numpy as np
-import tensorflow as tf
-from tensorflow.keras.models import load_model
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
-import uvicorn
 import io
 from PIL import Image
 
 
 
-IMG_SIZE = (160, 160)
+IMG_SIZE = (224, 224)
 CLASS_LABELS = ['Angry', "Contempt",'Disgust', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
-model = load_model("vgg19_emotion_classifier_regularized.h5", compile=False)
+model = load_model("Model.h5", compile=False)
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 app = FastAPI(debug=True)
 
