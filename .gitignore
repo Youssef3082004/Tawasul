@@ -11,7 +11,7 @@
 .svn/
 .swiftpm/
 migrate_working_dir/
-vgg19_emotion_classifier_regularized.h5
+Model.h5
 
 # IntelliJ related
 *.iml
