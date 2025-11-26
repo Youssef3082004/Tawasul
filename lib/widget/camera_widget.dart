@@ -1,14 +1,13 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:tawasul/constants.dart';
-// import 'package:image_picker/image_picker.dart';
-// import 'dart:io';
 
 
-// final GlobalKey<_Home> statisticsKey = GlobalKey<_Home>();
 
 class StatisticssWidget extends StatefulWidget{
-  const StatisticssWidget({super.key});
+  final List<dynamic> Prediction;
+  final String Advice;
+  const StatisticssWidget({super.key, required this.Prediction,required this.Advice});
 
   @override
   State<StatisticssWidget> createState() => _Home();
@@ -26,13 +25,13 @@ class _Home extends State<StatisticssWidget>{
     Text title = Text("Emotion Breakdown",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold,fontFamily: "Inter_ExtraBold"),);
     Row ggg = Row(children: [title],mainAxisAlignment: MainAxisAlignment.start,);
 
-    Widget class1 = ClassPercentage(Class_text: "Happy",Percentage: 0.75,loaded: Color(0xff13ec13));
-    Widget class2 = ClassPercentage(Class_text: "Sad",Percentage: 0.35);
-    Widget class3 = ClassPercentage(Class_text: "Natural",Percentage: 0.12,loaded: Colors.red);
+    Widget class1 = ClassPercentage(Class_text: widget.Prediction[0]["label"],Percentage:  widget.Prediction[0]["value"],loaded: Color(0xff13ec13));
+    Widget class2 = ClassPercentage(Class_text: widget.Prediction[1]["label"],Percentage:  widget.Prediction[1]["value"]);
+    Widget class3 = ClassPercentage(Class_text: widget.Prediction[2]["label"],Percentage:  widget.Prediction[2]["value"],loaded: Colors.red);
       
 
 
-    Column controls = Column(children: [ggg,PredictedClass(Class_text: "Happy"),class1,class2,class3],mainAxisAlignment: MainAxisAlignment.start,spacing: 15,);
+    Column controls = Column(children: [ggg,PredictedClass(Class_text: widget.Prediction[0]["label"]),class1,class2,class3],mainAxisAlignment: MainAxisAlignment.start,spacing: 15,);
     return Container(child: controls,padding: EdgeInsets.all(10),decoration: cons.Container_decor);
 
   }
@@ -55,16 +54,16 @@ class _Home extends State<StatisticssWidget>{
     return Row(children: [class_row,probability_row],crossAxisAlignment: CrossAxisAlignment.center,spacing: 5,mainAxisAlignment: MainAxisAlignment.spaceBetween,);
   }
 
-
-
-  Widget PredictedClass({required String Class_text}){
+  Widget PredictedClass({required String Class_text}) {
     Constants cons = Constants(context: context);
 
     Text Primaery =  Text("Primary Emotion:",style:TextStyle(color: Colors.white,fontWeight: FontWeight.bold));
     Text Class = Text(Class_text,style: TextStyle(color: Color(0xff13ec13),fontWeight: FontWeight.w800));
     Row class_row = Row(children: [Primaery,Expanded(child: Class)],spacing: 5);
 
-    Text Desc = Text(style: TextStyle(color: Colors.white54,fontWeight: FontWeight.w500,),maxLines: 10,overflow:TextOverflow.visible,softWrap: true,textWidthBasis: TextWidthBasis.parent,textAlign: TextAlign.left,"Our analysis indicates that the dominant emotion displayed is happiness. This is often characteriæd by smiling. raised cheeks and crinkling around the eyes.");
+
+
+    Text Desc = Text(style: TextStyle(color: Colors.white54,fontWeight: FontWeight.w500,),maxLines: 10,overflow:TextOverflow.visible,softWrap: true,textWidthBasis: TextWidthBasis.parent,textAlign: TextAlign.left,widget.Advice);
     Row Desc_Row  = Row(children: [Expanded(child: Desc)],mainAxisAlignment: MainAxisAlignment.start,);
     
     Column Class_Column = Column(children: [class_row,Desc_Row],spacing: 5);

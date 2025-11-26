@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:http/http.dart' as http;
@@ -78,6 +78,35 @@ class PublicFunction{
       return {"Error": "Request failed"};
     }
   }
+
+
+  static  Future<List<dynamic>> getImageEmotion(File imageFile) async {
+
+      final url = Uri.parse("https://awadallayossef-EmotionClassification.hf.space/predict");
+
+      try {
+        var request = http.MultipartRequest('POST', url);
+        request.files.add(await http.MultipartFile.fromPath('image', imageFile.path));
+
+        var streamedResponse = await request.send();
+        var response = await http.Response.fromStream(streamedResponse);
+
+        if (response.statusCode == 200) {
+          final data = jsonDecode(response.body);
+
+          if (data['status'] == 'success') {
+            final results = data['results'];
+            if (results['faces'] != 0 && results['top3'] != null) {
+              return results['top3']; 
+            }
+          }
+        }
+      } catch (e) {
+        print("Error getting emotion: $e");
+      }
+      
+      return [];
+    }
 
 
 
