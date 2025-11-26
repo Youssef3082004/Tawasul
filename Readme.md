@@ -1,4 +1,23 @@
-# Emotion Recognition Dataset Preprocessing and Analysis
+# 📑 Emotion Recognition Model (LSTM) 
+
+<p align="center">
+  <a href="https://fastapi.tiangolo.com/"> <img src="https://img.shields.io/badge/python-ffcf3f?style=for-the-badge&logo=python&logoColor=3671a2" alt="FastAPI"> </a>
+  <a href="https://pandas.pydata.org/">
+    <img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" alt="Pandas">
+  </a>
+  <a href="https://www.nltk.org/">
+    <img src="https://img.shields.io/badge/NLTK-4B0082?style=for-the-badge&logo=python&logoColor=white" alt="NLTK">
+  </a>
+  <a href="https://keras.io/">
+    <img src="https://img.shields.io/badge/Keras-D00000?style=for-the-badge&logo=keras&logoColor=white" alt="Keras">
+  </a>
+  <a href="https://www.tensorflow.org/">
+    <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white" alt="TensorFlow">
+  </a>
+</p>
+
+
+## 🔍 Model OverView
 
 This branch contains the Jupyter Notebook (`TextPreprocessing.ipynb`) that outlines the preprocessing steps applied to a large text dataset for a **Multi-Class Emotion Recognition** task.
 
@@ -81,3 +100,7 @@ The results of the preprocessing are saved into the following CSV files:
 * `Cleaned_Emotions_4.csv`: Includes the original `text` and `label` columns, along with the new `CleanedText` and `Emotion` (mapped name) columns.
   
 * `Cleaned_Emotions_2.csv`: Includes only the final `CleanedText` and `Emotion` columns, ready for modeling.
+
+## 🎯 Model Performance
+
+The LSTM-based emotion recognition model achieved an **accuracy of 94%** on the test set, demonstrating strong performance in classifying the six primary emotion classes from text data.
