@@ -24,6 +24,8 @@
   - **Dataset:** Trained on the **AffectNet** dataset (Processed).
   - **Use case:** Deploying the vision component of the **Tawasul Application** to detect emotions from user photos in real-time.
   - **Performance:** Fine-tuned with class balancing and heavy data augmentation to handle real-world lighting and variations.
+  - **Dataset:**  [**Kaggle link**](https://www.kaggle.com/datasets/fatihkgg/affectnet-yolo-format)
+  
 
 
 
