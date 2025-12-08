@@ -12,14 +12,17 @@ import 'package:tawasul/screens/onboard/welcome.dart';
 import 'package:tawasul/screens/onboard/onboarding.dart';
 import 'package:tawasul/provider/theme.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-const apiKey = 'AIzaSyDiZVuBtz08mZQx7hMWjEkARCTKTFAAd8Y';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await DatabaseHelper().resetDatabase(); // delete old DB
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
+
+  final apiKey = dotenv.env['GEMINI_API_KEY'] ?? '';
   WidgetsFlutterBinding.ensureInitialized();
   Gemini.init(apiKey: apiKey, enableDebugging: true);
+  
   final loginornot = await PublicFunction.loadUserState();
 
   runApp(MultiProvider(providers: [ChangeNotifierProvider(create: (context) => Thoughtsprovider())],child: MyApp(loginornot: loginornot,)));
